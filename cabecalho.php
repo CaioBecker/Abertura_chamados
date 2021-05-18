@@ -9,9 +9,9 @@
     ob_start();
 
     //VARIAVEIS NOME
-    $nome = $_SESSION['usuarioNome'];
-    $pri_nome = substr($nome, 0, strpos($nome, ' '));
-    
+    @$nome = @$_SESSION['usuarioNome'];
+    @$pri_nome = substr(@$nome, 0, strpos(@$nome, ' '));
+
 
 ?>
 
@@ -22,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="img/logo/icone_santa_casa_sjc_colorido.png">
-    <title>Portal Medicamentos</title>
+    <title>Abertura de chamados</title>
     <!--CSS-->
     <?php 
         include 'css/style.php';
@@ -41,7 +41,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-color">
             <a class="navbar-brand" href="home.php">
                 <img src="img/logo/icone_santa_casa_sjc_branco.png" height="28px" width="28px" class="d-inline-block align-top" alt="Santa Casa de São José dos Campos">
-                <h10>Portal Medicamentos</h10>
+                <h10>Abertura de chamados</h10>
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,11 +68,8 @@
                             <a class="dropdown-item" style="background-color: #f5f5f5;" href="javascript:void(0)" ><i class="fas fa-pills"></i> Medicamentos</a>-->
 
 							<a class="dropdown-item" href="home.php"><i class="fas fa-home"></i> Home</a>
-                            <a class="dropdown-item" href="medicamentos.php"><i class="fas fa-pills"></i> Medicamentos</a>
-                            <a class="dropdown-item" href="medicamentos_pam.php"><i class="fas fa-capsules"></i> P.A.M</a>
-                            <?php if( $_SESSION['usuarioADM'] == 'S'){ ?>
-                                <a class="dropdown-item" href="medicamentos_pam_adm.php"><i class="fas fa-capsules"></i> P.A.M ADM</a>
-                            <?php } ?>
+                            <a class="dropdown-item" href="config_padrao.php"><i class="fas fa-pills"></i> Config. padrão</a>
+                            <a class="dropdown-item" href="registrar_chamado.php"><i class="fas fa-capsules"></i> Registrar chamado</a>
 
         <div class="div_br"> </div>
 
