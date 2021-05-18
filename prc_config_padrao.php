@@ -3,11 +3,13 @@
  //CONEXAO
  include 'conexao.php';
 
+ session_start();
+
 //VALIDANDO ENVIO DE FORMULARIO (POST)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS 
-    $var_usuario = 'AMONTENEGRO'; 
+    $var_usuario = $_SESSION['usuarioLogin2']; 
     $var_setor = $_POST['frm_setor'];
     $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
@@ -30,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>RAMAL:' ; echo $var_ramal;
 
 
-    $deleta_config_padrao = "DELETE FROM PORTAL_CHAM_CONFIG_PADRAO WHERE UPPER(CD_USUARIO) = '$var_usuario'";
+    $deleta_config_padrao = "DELETE FROM PORTAL_CHAM_CONFIG_PADRAO WHERE UPPER(CD_USUARIO) = UPPER('$var_usuario')";
     
     //EXECUTANDO NO  BANCO
     $result_deleta = oci_parse($conn_ora, $deleta_config_padrao);
@@ -53,10 +55,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //EXECUTANDO NO  BANCO
     $result_config_padrao = oci_parse($conn_ora, $inserir_config_padrao);
 
-    //EXECUTANDO A CONSULTA SQL (ORACLE)
-    oci_execute($result_config_padrao);
 
-    header("location: config_padrao.php");
+    //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+    $valida_config_padrao = oci_execute($result_config_padrao);  
+
+
+    //VALIDACAO
+    if (!$valida_config_padrao) {   
+
+          $erro = oci_error($result_config_padrao);																							
+          $_SESSION['msgerro'] = htmlentities($erro['message']);
+          header('location: config_padrao.php'); 
+          return 0;
+
+      } else {
+
+        $_SESSION['msg'] = 'Configuração atualizado com sucesso!';
+            header('location: home.php'); 
+
+      }
+
+    
 
 
 

@@ -1,5 +1,7 @@
 <?php
 
+$var_USUARIO = $_SESSION['usuarioLogin2'];
+
 /////////////////
 //SETOR USUARIO//
 /////////////////
@@ -10,7 +12,7 @@ FROM SETOR st
 INNER JOIN dbamv.portal_cham_config_padrao cp
   ON cp.CD_SETOR = st.CD_SETOR
 WHERE st.SN_ATIVO = 'S'
-AND UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+AND UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_setor_usuario = oci_parse($conn_ora, $consulta_setor_usuario);							
 
@@ -27,7 +29,7 @@ $consulta_especialidade_usuario =
 FROM dbamv.portal_cham_config_padrao cp
 INNER JOIN dbamv.MANU_ESPEC manu
   ON manu.CD_ESPEC = cp.CD_ESPEC
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_especialidade_usuario = oci_parse($conn_ora, $consulta_especialidade_usuario);
 
@@ -43,7 +45,7 @@ $consulta_oficina_usuario =
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
 INNER JOIN dbamv.OFICINA o
   ON cp.CD_TIPO_OS = o.CD_OFICINA
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_oficina_usuario = oci_parse($conn_ora, $consulta_oficina_usuario);
 
@@ -59,7 +61,7 @@ $consulta_localidade_usuario =
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
 INNER JOIN dbamv.LOCALIDADE L
   ON cp.cd_localidade = L.CD_LOCALIDADE
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_localidade_usuario = oci_parse($conn_ora, $consulta_localidade_usuario);							
 
@@ -76,7 +78,7 @@ $consulta_motivo_os_usuario =
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
 INNER JOIN dbamv.TIPO_OS TIO
   ON cp.CD_TIPO_OS = TIO.CD_TIPO_OS
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_motivo_os_usuario = oci_parse($conn_ora, $consulta_motivo_os_usuario);
 
@@ -93,7 +95,7 @@ $consulta_mot_serv_usuario =
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
 INNER JOIN dbamv.MOT_SERV MOS
  ON cp.CD_MOT_SERV = mos.CD_MOT_SERV
- WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+ WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_mot_serv_usuario = oci_parse($conn_ora, $consulta_mot_serv_usuario);							
 
@@ -107,7 +109,7 @@ $row_mot_serv_usuario = oci_fetch_array($result_mot_serv_usuario);
 $consulta_email_usuario =
 "SELECT cp.DS_EMAIL_ALTERNATIVO
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_email_usuario = oci_parse($conn_ora, $consulta_email_usuario);
 
@@ -121,7 +123,7 @@ $row_email_usuario = oci_fetch_array($result_email_usuario);
 $consulta_ramal_usuario =
 "SELECT cp.DS_RAMAL
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
-WHERE UPPER(cp.CD_USUARIO) = UPPER('AMONTENEGRO')";
+WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_ramal_usuario = oci_parse($conn_ora, $consulta_ramal_usuario);
 

@@ -1,4 +1,6 @@
 <?php 
+    
+    session_start();
     //CABECALHO
     include 'cabecalho.php';
     //CONEXAO
@@ -8,8 +10,13 @@
     include 'config_padrao_usuario_sql.php';
     //echo $hoje;
 
-    session_start();
 ?>
+
+        <!--MENSAGENS-->
+        <?php
+            include 'js/mensagens.php';
+            include 'js/mensagens_usuario.php';
+        ?>
     
     
 
@@ -230,17 +237,7 @@
               
         </br></br>
 
-<?php
 
-
-        $inserir_config_padrao = "INSERT INTO PORTAL_CHAM_CONFIG_PADRAO
-        (CD_USUARIO, CD_SETOR, CD_ESPEC, CD_TIPO_OS, CD_LOCALIDADE,
-        CD_MOT_SERV, CD_SERVICO, DS_EMAIL_ALTERNATIVO, DS_RAMAL)
-        VALUES
-        ('AMONTENEGRO',186,52,36099,142,
-        38,46,'SUPORTE2_SISTEMAS@SANTACASAJSC.COM.BR',1962)";
-
-?>
 
 <?php
     //RODAPE
