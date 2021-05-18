@@ -1,3 +1,20 @@
+
+<?php
+    //PHP GERAL
+
+    //PAGINA ATUAL
+    $_SESSION['pagina_acesso'] = substr($_SERVER["PHP_SELF"],1,30);
+
+    //CORRIGE PROBLEMAS DE HEADER (LIMPAR O BUFFER)
+    ob_start();
+
+    //VARIAVEIS NOME
+    $nome = $_SESSION['usuarioNome'];
+    $pri_nome = substr($nome, 0, strpos($nome, ' '));
+    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,21 +22,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="img/logo/icone_santa_casa_sjc_colorido.png">
-    <title>Layout Bootstrap</title>
+    <title>Portal Medicamentos</title>
     <!--CSS-->
-    <link rel="stylesheet" href="css/style.css">
+    <?php 
+        include 'css/style.php';
+        include 'css/style_mobile.php';
+    ?>
     <!-- Bootstrap CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a3000fd09d.js" crossorigin="anonymous"></script>
+    <!--GRAFICOS CHART JS-->  
+    <script src="js/Chart.js-2.9.4/dist/Chart.js"></script>
 </head>
 <body>
     <header>    
 
         <nav class="navbar navbar-expand-md navbar-dark bg-color">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="home.php">
                 <img src="img/logo/icone_santa_casa_sjc_branco.png" height="28px" width="28px" class="d-inline-block align-top" alt="Santa Casa de São José dos Campos">
-                <h10>Santa Casa de São José dos Campos</h10>
+                <h10>Portal Medicamentos</h10>
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,20 +63,28 @@
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bars" aria-hidden="true"></i> Menu</a></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown06">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+
+                            <!--Menu
+                            <a class="dropdown-item" style="background-color: #f5f5f5;" href="javascript:void(0)" ><i class="fas fa-pills"></i> Medicamentos</a>-->
+
+							<a class="dropdown-item" href="home.php"><i class="fas fa-home"></i> Home</a>
+                            <a class="dropdown-item" href="medicamentos.php"><i class="fas fa-pills"></i> Medicamentos</a>
+                            <a class="dropdown-item" href="medicamentos_pam.php"><i class="fas fa-capsules"></i> P.A.M</a>
+                            <?php if( $_SESSION['usuarioADM'] == 'S'){ ?>
+                                <a class="dropdown-item" href="medicamentos_pam_adm.php"><i class="fas fa-capsules"></i> P.A.M ADM</a>
+                            <?php } ?>
+
+        <div class="div_br"> </div>
+
                         </div>
                 </div>
                 </li>
-                <div class="menu_azul_claro">
+                <div class="menu_perfil">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Heitor</a></a>
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> <?php echo $pri_nome ?></a></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown06">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="sair.php"> <i class="fa fa-sign-out" aria-hidden="true"></i> Sair</a>
                         </div>
                     </li>
                 <div class="menu_vermelho">
@@ -63,15 +93,17 @@
         </nav>
 
     <!--DIRETORIO-->
-    <div class="diretorio">
+    <!--<div class="diretorio">
         <a class="diretorio_link" href="index.php"> 
             <i class="fa fa-home" aria-hidden="true"></i> Home 
         </a>
         <i class="fa fa-angle-right" aria-hidden="true"></i>
         <a class="diretorio_link" href="#"> 
-            <?php echo ucwords(substr(basename($_SERVER['PHP_SELF']),0,-4)); ?>
+            <?php 
+            //$nome_pagina = str_replace('_',' ',$_SERVER['PHP_SELF']);
+            //echo ucwords(substr(basename($nome_pagina),0,-4)); ?>
         </a>
-    </div>
+    </div>-->
 
     </header>
     

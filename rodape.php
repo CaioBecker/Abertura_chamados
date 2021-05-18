@@ -1,6 +1,6 @@
-        </div> <!-- FIM CLASS CONTEUDO -->
-    </div> <!-- FIM CLASS CONTAINER -->
+        </div>  <!-- FIM CLASS CONTAINER -->
     
+    </div> <!-- FIM CLASS CONTEUDO -->
     
     </main>
 
@@ -19,29 +19,25 @@
             </div>
         	<div class="col-md-4 footer-nav animated fadeInUp">
             	<h4>Menu</h4>
-            	<div class="col-md-6">
+            	<div class="col-md-10">
+                
                     <ul class="pages">
-                        <li><a href="#">Link 1</a></li>
-                        <li><a href="#">Link 2</a></li>
-                        <li><a href="#">Link 3</a></li>
-                        <li><a href="#">Link 4</a></li>
-                        <li><a href="#">Link 5</a></li>
+                        <li><a href="home.php">Home</a></li>                           
                     </ul>
+
                 </div>
-            	<div class="col-md-6">
+            	<div class="col-md-10">
                     <ul class="list">
-                        <li><a href="#">Perfil</a></li>
-                        <li><a href="#">Sair</a></li>
+                        <li><a href="sair.php">Sair</a></li>
                     </ul>
                 </div>
             </div>
         	<div class="col-md-3 footer-social animated fadeInDown">
             	<h4>Outros Projetos</h4>
             	<ul>
-                	<li><a href="#">Projeto 1</a></li>
-                	<li><a href="#">Projeto 2</a></li>
-                	<li><a href="#">Projeto 3</a></li>
-                	<li><a href="#">Projeto 4</a></li>
+                	<li><a href="http://10.200.0.50:8080/pgr/">Gestão de Resultados</a></li>
+                	<li><a href="http://10.200.0.50:8080/guiasmed/">Portal Guias Médico</a></li>
+                	<li><a href="https://kpi.santacasasjc.com.br/">Portal KPI</a></li>
                 </ul>
             </div>
         </div>
@@ -54,17 +50,22 @@
 
     </footer>
 
-    <!-- JQUERY -->
+    <!--JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-     <!-- Bootstrap JAVASCRIPT -->  
-     <script src="bootstrap/js/bootstrap.min.js"></script> 
+    <!--POPPER-->    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!--BOOTSTRAP JAVASCRIPT-->  
+    <script src="bootstrap/js/bootstrap.min.js"></script> 
+
+    
+   
 
     <!--JAVASCRIPTS-->
+
     <script src="js/scripts.js"></script>  
-   
-    <!-- Paralax -->
-    <script src="https://cdn.jsdelivr.net/parallax.js/1.4.2/parallax.min.js"></script>
 
 </body>
 </html>
