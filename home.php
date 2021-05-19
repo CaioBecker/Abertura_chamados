@@ -45,7 +45,7 @@
         <!--BOTOES-->
         <a href="config_padrao.php" class="botao_home" type="submit"><h21><i class="fa fa-question-circle-o" aria-hidden="true"></i> Configuração padrão </h21></a></td></tr>
 		<span class="espaco_pequeno"></span>
-        <a href="#" class="botao_home" type="submit"><h21><i class="fa fa-question-circle-o" aria-hidden="true"></i> Registro chamado </h21></a></td></tr>
+        <a href="registro_chamado.php" class="botao_home" type="submit"><h21><i class="fa fa-question-circle-o" aria-hidden="true"></i> Registro chamado </h21></a></td></tr>
         </br>
         </br>
         <!--TITULO-->
