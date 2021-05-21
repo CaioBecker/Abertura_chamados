@@ -7,7 +7,7 @@ include 'config_padrao_usuario_sql.php';
 
 ?>
 
-<h11><i class="fas fa-user-alt"></i> Registro de Chamados</h11>
+<h11><i class="fas fa-edit"></i> Registro de Chamados</h11>
 <h27> <a href="home.php" style="color: #444444; text-decoration: none;"> <i class="fa fa-reply" aria-hidden="true"></i> Voltar </a> </h27> 
 
 <form type=post action="registro_chamado.php">
