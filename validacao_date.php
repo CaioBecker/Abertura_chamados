@@ -2,7 +2,10 @@
 
 function foca_data_maior() {
 
+    //DIMINUE DOIS MINUTOS DA DATA DO PEDIDO DA OS
+
     document.getElementById('data_maior').focus();
+    
                     
 };
 
