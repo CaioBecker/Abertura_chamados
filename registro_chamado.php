@@ -7,7 +7,7 @@ include 'config_padrao_usuario_sql.php';
 
 ?>
 
-<h11><i class="fas fa-edit"></i> Registro de Chamados</h11>
+<h11><i class="fas fa-user-alt"></i> Registro de Chamados</h11>
 <h27> <a href="home.php" style="color: #444444; text-decoration: none;"> <i class="fa fa-reply" aria-hidden="true"></i> Voltar </a> </h27> 
 
 <form type=post action="registro_chamado.php">
@@ -28,11 +28,11 @@ CHAMADO
     </div>
     <div class="col-md-3">
         Data Pedido:
-        <input class="form-control" type="datetime-local" name="dt_pedido" id="id_dt_pedido" required>
+        <input class="form-control" type="datetime-local" name="dt_pedido" id="data_pedido" required>
     </div>
     <div class="col-md-3">
-        Data enceramento:
-        <input class="form-control" type="datetime-local" name="dt_enceramento" id="id_dt_enceramento"required>
+        Data encerramento:
+        <input class="form-control" type="datetime-local" name="dt_enceramento" id="data_encerramento"required>
     </div>
     <div class="col-md-2">
         Nome Usuario:

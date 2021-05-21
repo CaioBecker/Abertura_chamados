@@ -68,14 +68,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           return 0;
 
       } else {
-        $_SESSION['SETOR2'] = $_POST['frm_setor'];
-        $_SESSION['ESPECIALIDADE2'] = $_POST['frm_especialidade'];
-        $_SESSION['OFICINA2'] = $_POST['frm_oficina'];
-        $_SESSION['LOCALIDADE2'] = $_POST['frm_localidade'];
-        $_SESSION['MOTIVO2'] = $_POST['frm_motivo_os'];
-        $_SESSION['TIPO2'] = $_POST['frm_tipo_os'];
-        $_SESSION['EMAIL2'] = $_POST['frm_email'];
-        $_SESSION['RAMAL2'] = $_POST['frm_ramal'];
+        //$_SESSION['SETOR2'] = $_POST['frm_setor'];
+        //$_SESSION['ESPECIALIDADE2'] = $_POST['frm_especialidade'];
+        //$_SESSION['OFICINA2'] = $_POST['frm_oficina'];
+        //$_SESSION['LOCALIDADE2'] = $_POST['frm_localidade'];
+        //$_SESSION['MOTIVO2'] = $_POST['frm_motivo_os'];
+        //$_SESSION['TIPO2'] = $_POST['frm_tipo_os'];
+        //$_SESSION['EMAIL2'] = $_POST['frm_email'];
+        //$_SESSION['RAMAL2'] = $_POST['frm_ramal'];
 
         $_SESSION['msg'] = 'Configuração atualizado com sucesso!';
             header('location: home.php'); 
