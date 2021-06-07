@@ -150,39 +150,40 @@
                     </select>
                 </div>
 
-                 <!--MOTIVO DO SERVICO-->
+                 <!--TIPO DO SERVICO-->
                  <div class="form-group col-md-4">
-                    <label>Motivo da OS</label>
-                    <select name="frm_motivo_os" class="form-control" required>
+                    <label>Tipo do Serviço </label>
+                    <select name="frm_tipo_os" class="form-control" required>
                     
                     
                         <?php
-                             //SE JA EXISTIR MOTIVO CADASTRADO PARA O USUARIO LOGADO
-                             if(isset($row_motivo_os_usuario['CD_TIPO_OS'])){
+                             //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
+                             if(isset($row_tipo_os_usuario ['CD_TIPO_OS'])){
                                 //EXIBA ELE
-                                echo  '<option value="'. $row_motivo_os_usuario['CD_TIPO_OS'] . '">' . $row_motivo_os_usuario['DS_TIPO_OS']. '</option>';
+                                echo  '<option value="'. $row_tipo_os_usuario['CD_TIPO_OS'] . '">' . $row_tipo_os_usuario['DS_TIPO_OS']. '</option>';
                                 } else {
                                 
                                     //SENAO SOLICITA QUE SE SELECIONE UM VALOR
                                     echo "<option value=''>SELECIONE UM VALOR</option>";
                                 }
+                        ?>
+                        <?php
+                        while($row_tipo_os = oci_fetch_array($result_tipo_os)){ 
 
-                        while($row_motivo_os = oci_fetch_array($result_tipo_os)){ 
-
-                            echo '<option value="' .$row_motivo_os['CD_TIPO_OS'] . '">' . $row_motivo_os['DS_TIPO_OS'] . '</option>';
-                            }
+                            echo '<option value="' .$row_tipo_os['CD_TIPO_OS'] . '">' . $row_tipo_os['DS_TIPO_OS'] . '</option>';
+                            }_
                         ?>
                     </select>                            
                 </div>
 
-                <!--TIPO DO SERVICO-->
+                <!--MOTIVO DO SERVICO-->
                 <div class="form-group col-md-4">
-                    <label>Tipo do Serviço</label>
-                    <select name="frm_tipo_os" class="form-control" required>
+                    <label>Motivo da OS</label>
+                    <select name="frm_motivo_os" class="form-control" required>
                    
 
                         <?php
-                              //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
+                              //SE JA EXISTIR MOTIVO CADASTRADO PARA O USUARIO LOGADO
                               if(isset($row_mot_serv_usuario['CD_MOT_SERV'])){
                                  //EXIBA ELE
                                  echo  '<option value="'. $row_mot_serv_usuario['CD_MOT_SERV'] . '">' . $row_mot_serv_usuario['DS_MOT_SERV']. '</option>';
@@ -190,7 +191,8 @@
                                     
                                         //SENAO SOLICITA QUE SE SELECIONE UM VALOR
                                         echo "<option value=''>SELECIONE UM VALOR</option>";}
-
+                        ?>
+                        <?php
                         while($row_mot_serv = oci_fetch_array($result_mot_serv)){	
 
                             echo  '<option value="'. $row_mot_serv['CD_MOT_SERV'] . '">' . $row_mot_serv['DS_MOT_SERV'] . '</option>';

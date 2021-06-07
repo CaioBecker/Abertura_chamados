@@ -28,11 +28,11 @@ CHAMADO
     </div>
     <div class="col-md-3">
         Data Pedido:
-        <input class="form-control" type="datetime-local" name="dt_pedido" id="data_pedido" required>
+        <input class="form-control" type="datetime-local" name="dt_pedido" id="data_pedido" onblur="foca_data_maior()" required>
     </div>
     <div class="col-md-3">
         Data encerramento:
-        <input class="form-control" type="datetime-local" name="dt_enceramento" id="data_encerramento"required>
+        <input class="form-control" type="datetime-local" name="dt_enceramento" id="data_encerramento" onblur="foca_data_maior()" required>
     </div>
     <div class="col-md-2">
         Nome Usuario:
@@ -41,8 +41,57 @@ CHAMADO
 </div>
 <div class="form-row">
     <div class="col-md-2">
-        Solicitante: <!--auto complete-->
-        <input class="form-control" type="text" name="nm_solicitante" id="id_nm_solicitante" required>        
+        <!--auto complete-->
+        <?php 
+
+            //CLASSE BOTAO
+            //$classe_botao = 'fas fa-plus'; //ADICIONAR
+            $classe_botao = 'fas fa-search'; //PESQUISAR
+
+            //ACAO BOTAO
+            $pagina_acao = 'permissoes.php';
+
+            //PLACEHOLDER BOTAO
+            if (!empty($filtro_cd_matricula)){
+                $placeholder_botao = $filtro_cd_matricula;
+            }else{
+                $placeholder_botao = 'LOGIN';
+            }
+
+            //CONSULTA_LISTA
+            $consulta_lista = "SELECT DISTINCT usu.*
+                            FROM dbasgu.USUARIOS usu
+                            INNER JOIN dbasgu.PAPEL_USUARIOS pu
+                                ON pu.CD_USUARIO = usu.CD_USUARIO
+                            WHERE usu.SN_ATIVO = 'S'";
+
+            $result_lista = oci_parse($conn_ora, $consulta_lista);																									
+
+            //EXECUTANDO A CONSULTA SQL (ORACLE)
+            oci_execute($result_lista);            
+
+            ?>
+
+            <script>
+
+            //LISTA
+            var countries = [     
+            <?php
+                while($row_lista = oci_fetch_array($result_lista)){	
+                    echo '"'. $row_lista['CD_USUARIO'] .'"'.',';                
+                }
+            ?>
+            ];
+
+            </script>
+
+            <?php
+                //AUTOCOMPLETE
+                include 'autocomplete.php';
+
+            ?>
+                        
+           <!--FIM CAIXA AUTOCOMPLETE-->     
     </div>
     <div class="col-md-6">
         Observação:
@@ -53,7 +102,7 @@ CHAMADO
         <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo @$_SESSION['usuarioLogin2'];?>" >
     </div>
 </div>
-
+<!--------------------------------------------------SERVIÇO---------------------------------------------->
 <div class="div_br"></div>
 <div class="div_br"></div>
 <div class="fnd_azul">
@@ -70,7 +119,7 @@ Serviço
     <div class="col-md-3">
         Hora inicial:
         <input class="form-control" type="datetime-local" name="hr_inicial" id="data_menor"
-        onblur="foca_data_maior()">
+        onblur="foca_data_maior()" required>
     </div>
     <div class="col-md-3">
         Hora final:
@@ -80,7 +129,7 @@ Serviço
     </div>
 
 </div>
-
+<!------------------------CONFIGURAÇÃO PADRÃO-------------------------------------------------------------->
 <div class="div_br"></div>
 <div class="div_br"></div>
 <div class="fnd_azul">
@@ -91,17 +140,17 @@ Configuração Padrão
 
 <div class="form-row">
                
-                <!--SETOR-->
+               <!--SETOR-->
                 <div class="form-group col-md-4">
                 <label>Setor</label>
-                <select name="frm_setor" class="form-control" disabled>
+                <select name="frm_setor_chamado" class="form-control" disabled>
                 
                 <!--IF USUARIO-->
                 <?php
                     //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
                     if(isset($row_setor_usuario['CD_SETOR'])){
                     //EXIBA ELE
-                    echo  '<option value="'. $row_setor_usuario['CD_SETOR'] . '">' . $row_setor_usuario['NM_SETOR']. '</option>';
+                    echo   '<option value="'. $row_setor_usuario['CD_SETOR'] . '">' . $row_setor_usuario['NM_SETOR']. '</option>';
                     } else {
                     //SENAO SOLICITA QUE SE SELECIONE UM VALOR
                         echo "<option value=''>SELECIONE UM VALOR</option>";
@@ -125,7 +174,7 @@ Configuração Padrão
                 <!--ESPECIALIDADE-->
                 <div class="form-group col-md-4">
                 <label>Especialidade</label>
-                <select name="frm_especialidade" class="form-control" disabled>
+                <select name="frm_especialidade_chamado" class="form-control" disabled>
                     <?php
                          //SE JA EXISTIR ESPECIALIDADE CADASTRADO PARA O USUARIO LOGADO
                         if(isset($row_especialidade_usuario['CD_ESPEC'])){
@@ -154,7 +203,7 @@ Configuração Padrão
                 <!--OFICINA-->
                 <div class="form-group col-md-4">
                     <label>Oficina</label>
-                    <select name="frm_oficina" class="form-control" disabled>
+                    <select name="frm_oficina_chamado" class="form-control" disabled>
 
                     <!--IF USUARIO-->
                     <?php
@@ -181,7 +230,7 @@ Configuração Padrão
                 <!--LOCALIDADE-->
                 <div class="form-group col-md-4">
                     <label>Localidade</label>
-                    <select name="frm_localidade" class="form-control" disabled>
+                    <select name="frm_localidade_chamado" class="form-control" disabled>
                   
                         <?php
 
@@ -206,7 +255,7 @@ Configuração Padrão
                  <!--MOTIVO DO SERVICO-->
                  <div class="form-group col-md-4">
                     <label>Motivo da OS</label>
-                    <select name="frm_motivo_os" class="form-control" disabled>
+                    <select name="frm_motivo_os_chamado" class="form-control" disabled>
                     
                     
                         <?php
@@ -231,7 +280,7 @@ Configuração Padrão
                 <!--TIPO DO SERVICO-->
                 <div class="form-group col-md-4">
                     <label>Tipo do Serviço</label>
-                    <select name="frm_tipo_os" class="form-control" disabled>
+                    <select name="frm_tipo_os_chamado" class="form-control" disabled>
                    
 
                         <?php
@@ -255,7 +304,7 @@ Configuração Padrão
                 <!--EMAIL-->
                 <div class="form-group col-md-4">
                     <label>E-mail</label>
-                    <input name="frm_email" input type="email" class="form-control"  
+                    <input name="frm_email_chamado" input type="email" class="form-control"  
                         value="<?php
                               //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
                               if(isset($row_email_usuario['DS_EMAIL_ALTERNATIVO'])){
@@ -270,7 +319,7 @@ Configuração Padrão
                 <!--RAMAL-->
                 <div class="form-group col-md-2">
                     <label>Ramal</label>
-                    <input type="number" class="form-control" name="frm_ramal" 
+                    <input type="number_chamado" class="form-control" name="frm_ramal" 
                       value = "<?php
                               //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
                               if(isset($row_ramal_usuario['DS_RAMAL'])){

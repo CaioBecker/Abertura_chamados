@@ -116,4 +116,15 @@ function valida_data() {
         return false;
     }  
 
+    //VALIDAR SE DATA INICIO E MENOR QUE DATA PEDIDO
+    if(data_inicio <= data_pedido){
+        alert("Data De Inicio Não Pode Ser Menor Que A Data Pedido");
+        document.getElementById('data_final').value= "";
+        window.setTiemout(function ()
+        {
+            document.getElementById('data_inicio').focus();
+        }, 0);
+        return false;
+    }  
+
 </script>
