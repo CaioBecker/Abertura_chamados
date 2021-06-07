@@ -171,7 +171,7 @@
                         while($row_tipo_os = oci_fetch_array($result_tipo_os)){ 
 
                             echo '<option value="' .$row_tipo_os['CD_TIPO_OS'] . '">' . $row_tipo_os['DS_TIPO_OS'] . '</option>';
-                            }_
+                            }
                         ?>
                     </select>                            
                 </div>

@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
    $inserir_config_padrao = "INSERT INTO PORTAL_CHAM_CONFIG_PADRAO
                             (CD_USUARIO, CD_SETOR, CD_ESPEC, CD_TIPO_OS, CD_LOCALIDADE,
-                            CD_MOT_SERV, CD_SERVICO, DS_EMAIL_ALTERNATIVO, DS_RAMAL)
-                            VALUES (UPPER('$var_usuario'),'$var_setor','$var_especialidade','$var_oficina',
-                                    '$var_localidade','$var_motivo_os','$var_tipo_os','$var_email','$var_ramal')";
+                            CD_MOT_SERV, CD_SERVICO, DS_EMAIL_ALTERNATIVO, DS_RAMAL, CD_OFICINA)
+                            VALUES (UPPER('$var_usuario'),'$var_setor','$var_especialidade','$var_tipo_os',
+                                    '$var_localidade','$var_motivo_os','$var_tipo_os','$var_email','$var_ramal','$var_oficina')";
     
     echo '<br>';
 
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //$_SESSION['RAMAL2'] = $_POST['frm_ramal'];
 
         $_SESSION['msg'] = 'Configuração atualizado com sucesso!';
-            header('location: home.php'); 
+           header('location: home.php'); 
 
       }
 

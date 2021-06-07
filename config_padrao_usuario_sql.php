@@ -44,7 +44,7 @@ $consulta_oficina_usuario =
 "SELECT o.cd_OFICINA, o.ds_OFICINA
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
 INNER JOIN dbamv.OFICINA o
-  ON cp.CD_TIPO_OS = o.CD_OFICINA
+  ON cp.CD_OFICINA = o.CD_OFICINA
 WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 
 $result_oficina_usuario = oci_parse($conn_ora, $consulta_oficina_usuario);
