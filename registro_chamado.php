@@ -10,11 +10,11 @@ include 'config_padrao_usuario_sql.php';
 <h11><i class="fas fa-user-alt"></i> Registro de Chamados</h11>
 <h27> <a href="home.php" style="color: #444444; text-decoration: none;"> <i class="fa fa-reply" aria-hidden="true"></i> Voltar </a> </h27> 
 
-<form type=post action="registro_chamado.php">
+<form method="post" action="prc_registro_chamado.php">
 <div class="div_br"></div>
 <div class="div_br"></div>
 <div class="fnd_azul">
-    CHAMADO
+    Chamado
 </div>
 <div class="div_br"></div>
     <div class="form-row">
@@ -32,74 +32,72 @@ include 'config_padrao_usuario_sql.php';
         </div>
         <div class="col-md-3">
             Data encerramento:
-            <input class="form-control" type="datetime-local" name="dt_enceramento" id="data_encerramento" onblur="valida_data()" required>
-        </div>
-        <div class="col-md-2">
-            Nome Usuario:
-            <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo @$_SESSION['usuarioLogin2'];?>" disabled>
+            <input class="form-control" type="datetime-local" name="dt_encerramento" id="data_encerramento" onblur="valida_data()" required>
         </div>
     </div>
     <div class="form-row">
-        <div class="col-md-2">
-            <!--auto complete-->
-            <?php 
+        <div class="col-md-3">
+            Funcionario Responsavel:
+            <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo @$_SESSION['usuarioLogin2'];?>" disabled>
+        </div>
 
-                //CLASSE BOTAO
-                //$classe_botao = 'fas fa-plus'; //ADICIONAR
-                $classe_botao = 'fas fa-search'; //PESQUISAR
+        <div class="col-md-3">
+            Solicitante:
+                <!--auto complete-->
+                <?php 
 
-                //ACAO BOTAO
-                $pagina_acao = 'permissoes.php';
+                    //CLASSE BOTAO
+                    //$classe_botao = 'fas fa-plus'; //ADICIONAR
+                    $classe_botao = 'fas fa-search'; //PESQUISAR
 
-                //PLACEHOLDER BOTAO
-                if (!empty($filtro_cd_matricula)){
-                    $placeholder_botao = $filtro_cd_matricula;
-                }else{
-                    $placeholder_botao = 'LOGIN';
-                }
+                    //ACAO BOTAO
+                    $pagina_acao = 'permissoes.php';
 
-                //CONSULTA_LISTA
-                $consulta_lista = "SELECT DISTINCT usu.*
-                                FROM dbasgu.USUARIOS usu
-                                INNER JOIN dbasgu.PAPEL_USUARIOS pu
-                                    ON pu.CD_USUARIO = usu.CD_USUARIO
-                                WHERE usu.SN_ATIVO = 'S'";
-
-                $result_lista = oci_parse($conn_ora, $consulta_lista);																									
-
-                //EXECUTANDO A CONSULTA SQL (ORACLE)
-                oci_execute($result_lista);            
-
-                ?>
-
-                <script>
-
-                //LISTA
-                var countries = [     
-                <?php
-                    while($row_lista = oci_fetch_array($result_lista)){	
-                        echo '"'. $row_lista['CD_USUARIO'] .'"'.',';                
+                    //PLACEHOLDER BOTAO
+                    if (!empty($filtro_cd_matricula)){
+                        $placeholder_botao = $filtro_cd_matricula;
+                    }else{
+                        $placeholder_botao = 'LOGIN';
                     }
-                ?>
-                ];
 
-                </script>
+                    //CONSULTA_LISTA
+                    $consulta_lista = "SELECT DISTINCT usu.*
+                                    FROM dbasgu.USUARIOS usu
+                                    INNER JOIN dbasgu.PAPEL_USUARIOS pu
+                                        ON pu.CD_USUARIO = usu.CD_USUARIO
+                                    WHERE usu.SN_ATIVO = 'S'";
 
-                <?php
-                    //AUTOCOMPLETE
-                    include 'autocomplete.php';
+                    $result_lista = oci_parse($conn_ora, $consulta_lista);																									
 
-                ?>
-                            
-            <!--FIM CAIXA AUTOCOMPLETE-->     
+                    //EXECUTANDO A CONSULTA SQL (ORACLE)
+                    oci_execute($result_lista);            
+
+                    ?>
+
+                    <script>
+
+                    //LISTA
+                    var countries = [     
+                    <?php
+                        while($row_lista = oci_fetch_array($result_lista)){	
+                            echo '"'. $row_lista['CD_USUARIO'] .'"'.',';                
+                        }
+                    ?>
+                    ];
+
+                    </script>
+
+                    <?php
+                        //AUTOCOMPLETE
+                        include 'autocomplete.php';
+
+                    ?>
+                                
+                <!--FIM CAIXA AUTOCOMPLETE-->     
         </div>
         <div class="col-md-6">
             Observação:
             <input class="form-control" type="text" name="ds_observacao" id="id_ds_observacao"required>
-        </div>
-        <div class="col-md-3">
-            Funcionario Responsavel:
-            <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo @$_SESSION['usuarioLogin2'];?>" >
         </div>
     </div>
 <!--------------------------------------------------SERVIÇO---------------------------------------------->
@@ -138,7 +136,6 @@ Configuração Padrão
 <div class="div_br"></div>
 <div class="div_br"></div>
 
-<form method="post" action="prc_config_padrao.php">
             <!--PRIMEIRA LINHA-->
             <div class="form-row">
 
@@ -176,10 +173,8 @@ Configuração Padrão
                             
                 }
                 ?>
-
                 </select>
                 </div>
-                
                 <!--ESPECIALIDADE-->
                 <div class="form-group col-md-4">
                 <label>Especialidade</label>

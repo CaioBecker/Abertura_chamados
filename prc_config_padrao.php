@@ -18,7 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_tipo_os = $_POST['frm_tipo_os'];
     $var_email = $_POST['frm_email'];
     $var_ramal = $_POST['frm_ramal'];
-    
+    $_SESSION['especialidade'] = $_POST['frm_especialidade'];
+    $_SESSION['setor']= $_POST['frm_setor'];
+    $_SESSION['email']= $_POST['frm_email'];
+    $_SESSION['ramal']= $_POST['frm_ramal'];
 
     //EXIBINDO VARIAVÉS
     echo '</br>USUARIO: '; echo $var_usuario;
