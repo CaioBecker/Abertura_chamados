@@ -38,7 +38,7 @@
 <!--Make sure the form has the autocomplete function switched off:-->
 <!--form autocomplete="off" action="<?php echo $pagina_acao; ?>"> -->
    
-    <div class="input-group mb-3 col-12 col-md-8 col-sm-12" style="padding: 0 !important;">
+    <div class="input-group col-12" style="padding: 0 !important;">
     <input id="input_valor" name="input_valor" type="text" class="form-control" 
         placeholder="<?php echo $placeholder_botao;  ?> " required>
     </div>

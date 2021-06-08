@@ -18,11 +18,7 @@ include 'config_padrao_usuario_sql.php';
 </div>
 <div class="div_br"></div>
     <div class="form-row">
-        <div class="col-md-1">
-            Código:
-            <input class="form-control" type="number" name="cd_os" id="id_cd_os" required>
-        </div>
-        <div class="col-md-3">
+         <div class="col-md-12">
             Descrição:
             <input class="form-control" type="text" name="ds_servico" id="id_ds_servico" required>
         </div>
@@ -57,7 +53,7 @@ include 'config_padrao_usuario_sql.php';
                     if (!empty($filtro_cd_matricula)){
                         $placeholder_botao = $filtro_cd_matricula;
                     }else{
-                        $placeholder_botao = 'LOGIN';
+                        $placeholder_botao= 'LOGIN';
                     }
 
                     //CONSULTA_LISTA
@@ -110,9 +106,54 @@ include 'config_padrao_usuario_sql.php';
     <div class="div_br"></div>
 
     <div class="form-row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             Código do Serviço:
-            <input class="form-control" type="number" name="cd_servico" id="id_cd_servico" required >
+            <?php 
+
+                    //CLASSE BOTAO
+                    //$classe_botao = 'fas fa-plus'; //ADICIONAR
+                    $classe_botao = 'fas fa-search'; //PESQUISAR
+
+                    //ACAO BOTAO
+                    $pagina_acao = 'permissoes.php';
+
+                    //PLACEHOLDER BOTAO
+                    if (!empty($filtro_filtro_cd_servico)){
+                        $placeholder_botao_servico = $filtro_cd_servico;
+                    }else{
+                        $placeholder_botao_servico= 'Serviço';
+                    }
+
+                    //CONSULTA_LISTA
+                    $consulta_lista_servico = "SELECT *
+                                               FROM dbamv.MANU_SERV ms
+                                               WHERE ms.CD_ITEM_RES = 186";
+
+                    $result_lista_servico = oci_parse($conn_ora, $consulta_lista_servico);																									
+
+                    //EXECUTANDO A CONSULTA SQL (ORACLE)
+                    oci_execute($result_lista_servico);            
+
+                    ?>
+
+                    <script>
+
+                    //LISTA
+                    var countries_servico = [     
+                    <?php
+                        while($row_lista_servico = oci_fetch_array($result_lista_servico)){	
+                            echo '"'. $row_lista_servico['NM_SERVICO'] .'"'.',';                
+                        }
+                    ?>
+                    ];
+
+                    </script>
+
+                    <?php
+                        //AUTOCOMPLETE
+                        include 'autocomplete_servico.php';
+
+                    ?>
         </div>
         <div class="col-md-3">
             Hora inicial:
@@ -207,7 +248,32 @@ Configuração Padrão
                 <!--OFICINA-->
                 <div class="form-group col-md-4">
                     <label>Oficina</label>
-                    <select name="frm_oficina" class="form-control" required>
+
+                    <select name="frm_oficina" class="form-control" hidden>
+
+                    <!--IF USUARIO-->
+                    <?php
+                        //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
+                        if(isset($row_oficina_usuario['CD_OFICINA'])){
+                        //EXIBA ELE
+                        echo  '<option value="'. $row_oficina_usuario['CD_OFICINA'] . '">' . $row_oficina_usuario['DS_OFICINA']. '</option>';
+                        } else {
+                        //SENAO SOLICITA QUE SE SELECIONE UM VALOR
+                            echo "<option value=''>SELECIONE UM VALOR</option>";
+                        }
+
+                    ?>
+                  
+                        <?php
+                            while($row_oficina = oci_fetch_array($result_oficina)){ 
+
+                                echo '<option value="' .$row_oficina['CD_OFICINA'] . '">' . $row_oficina['DS_OFICINA']. '</option>';
+                            }
+                        ?>
+                    </select>
+
+
+                    <select name="frm_oficina_show" class="form-control" disabled>
 
                     <!--IF USUARIO-->
                     <?php

@@ -19,14 +19,14 @@
     $var_email = $_SESSION['email'];
     $var_ramal = $_SESSION['ramal'];
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
-    $var_codigo = $_POST['cd_os'];
+    //$var_codigo = $_POST['cd_os'];
     $var_descricao = $_POST['ds_servico'];
     $var_data_pedido = $_POST['dt_pedido'];
     $var_data_encerramento = $_POST['dt_encerramento'];
     $var_usuario_responsavel = $_SESSION['usuarioLogin2'];
     $var_solicitante = $_POST['input_valor'];
     $var_observacao = $_POST['ds_observacao'];
-    $var_cd_servico = $_POST['cd_servico'];
+    $var_cd_servico = $_POST['input_valor_servico'];
     $var_hr_inicial = $_POST['hr_inicial'];
     $var_hr_final = $_POST['hr_final'];
 
@@ -43,7 +43,7 @@
     echo '</br>EMAIL:' ; echo $var_email;
     echo '</br>RAMAL:' ; echo $var_ramal;
     //EXIBIR VARIAVEIS REGISTRO CHAMADO
-    echo '</br>CODIGO:'; echo $var_codigo;
+    echo '</br>CODIGO: SERÁ UM NEXTVAL';
     echo '</br>DESCRIÇÂO:'; echo $var_descricao;
     echo '</br>DATA PEDIDO:'; echo $var_data_pedido;
     echo '</br>DATA ENCERRAMENTO:'; echo $var_data_encerramento;
