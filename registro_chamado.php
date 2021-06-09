@@ -30,12 +30,12 @@
             <!--------DATA PEDIDO-------------->
             <div class="col-md-3">
                 Data Pedido:
-                <input class="form-control" type="datetime-local" name="dt_pedido" id="data_pedido" onblur="valida_data()" required>
+                <input class="form-control" type="datetime-local" name="dt_pedido" id="id_data_pedido" onblur="valida_data()" required>
             </div>
             <!--------DATA ENCERRAMENTO-------->
             <div class="col-md-3">
                 Data encerramento:
-                <input class="form-control" type="datetime-local" name="dt_encerramento" id="data_encerramento" onblur="valida_data()" required>
+                <input class="form-control" type="datetime-local" name="dt_encerramento" id="id_data_encerramento" onblur="valida_data()" required>
             </div>
             <!--------MOTIVO DO SERVICO-------->
             <div class="form-group col-md-4">
@@ -156,7 +156,7 @@
                         if (!empty($filtro_filtro_cd_servico)){
                             $placeholder_botao_servico = $filtro_cd_servico;
                         }else{
-                            $placeholder_botao_servico= 'Serviço';
+                            $placeholder_botao_servico= 'SERVIÇO';
                         }
 
                         //CONSULTA_LISTA
@@ -194,13 +194,13 @@
             <!--------HORA INICIAL------------->
             <div class="col-md-3">
                 Hora inicial:
-                <input class="form-control" type="datetime-local" name="hr_inicial" id="data_menor"
+                <input class="form-control" type="datetime-local" name="hr_inicial" id="id_data_menor"
                 onblur="foca_data_maior()" required>
             </div>
             <!--------HORA FNAL---------------->
             <div class="col-md-3">
                 Hora final:
-                <input class="form-control" type="datetime-local" name="hr_final" id="data_maior" 
+                <input class="form-control" type="datetime-local" name="hr_final" id="id_data_maior" 
                 min="1997-01-01"  max="2999-12-31" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
                 onblur="valida_data()" required>
             </div>
