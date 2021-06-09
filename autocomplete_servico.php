@@ -40,7 +40,7 @@
    
     <div class="input-group col-12" style="padding: 0 !important;">
     <input id="input_valor_servico" name="input_valor_servico" type="text" class="form-control" 
-        placeholder="<?php echo $placeholder_botao_servico;  ?> " required>
+        placeholder="<?php echo $placeholder_botao_servico;  ?> " onkeypress="return ApenasLetras(event,this)" required>
     </div>
 
 <!--</form>-->
@@ -164,4 +164,24 @@ function autocomplete(inp, arr) {
 /*initiate the autocomplete function on the "input_valor" element, and pass along the countries array as possible autocomplete values:*/
 autocomplete(document.getElementById("input_valor_servico"), countries_servico);
 </script>
+<script>
 
+    function ApenasLetras(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            } else if (e) {
+                var charCode = e.which;
+            } else {
+                return true;
+            }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+                return true;
+            else
+                return false;
+        } catch (err) {
+            alert(err.Description);
+        }
+    }
+
+</script>

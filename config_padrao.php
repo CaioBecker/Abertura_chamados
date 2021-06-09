@@ -176,31 +176,6 @@
                     </select>                            
                 </div>
 
-                <!--MOTIVO DO SERVICO-->
-                <div class="form-group col-md-4">
-                    <label>Motivo da OS</label>
-                    <select name="frm_motivo_os" class="form-control" required>
-                   
-
-                        <?php
-                              //SE JA EXISTIR MOTIVO CADASTRADO PARA O USUARIO LOGADO
-                              if(isset($row_mot_serv_usuario['CD_MOT_SERV'])){
-                                 //EXIBA ELE
-                                 echo  '<option value="'. $row_mot_serv_usuario['CD_MOT_SERV'] . '">' . $row_mot_serv_usuario['DS_MOT_SERV']. '</option>';
-                                 } else {
-                                    
-                                        //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                                        echo "<option value=''>SELECIONE UM VALOR</option>";}
-                        ?>
-                        <?php
-                        while($row_mot_serv = oci_fetch_array($result_mot_serv)){	
-
-                            echo  '<option value="'. $row_mot_serv['CD_MOT_SERV'] . '">' . $row_mot_serv['DS_MOT_SERV'] . '</option>';
-                            }
-                        ?>
-                    </select>
-                </div>
-
                 <!--EMAIL-->
                 <div class="form-group col-md-4">
                     <label>E-mail</label>

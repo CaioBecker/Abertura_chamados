@@ -4,9 +4,14 @@ function foca_data_maior() {
 
     //DIMINUE DOIS MINUTOS DA DATA DO PEDIDO DA OS
 
-    document.getElementById('data_maior').focus();
-    
-                    
+    document.getElementById('data_maior').focus();                    
+};
+
+function foca_data_pedido() {
+
+//DIMINUE DOIS MINUTOS DA DATA DO PEDIDO DA OS
+
+document.getElementById('data_pedido').focus();                    
 };
 
 function valida_data() {
@@ -26,6 +31,7 @@ function valida_data() {
         {
             document.getElementById('data_menor').focus();
         }, 0);
+        printf data_inicial;
         return false; 
 
     }	
@@ -39,8 +45,9 @@ function valida_data() {
         {
             document.getElementById('data_pedido').focus();
         }, 0);
+        <?php echo 'teste data pedido nula'?>
         return false; 
-
+   
     }   
 
     //VALIDA SE A DATA MAIOR E NULA
@@ -52,8 +59,9 @@ function valida_data() {
         {
             document.getElementById('data_maior').focus();
         }, 0);
+        <?php echo 'teste data maior nula'?>
         return false; 
-
+       
     }   
 
     //VALIDA SE A DATA ENCERRAMENTO E NULA
@@ -65,8 +73,9 @@ function valida_data() {
         {
             document.getElementById('data_encerramento').focus();
         }, 0);
+        <?php echo 'teste data encerramento nula'?>
         return false; 
-
+        
     }
 
     //VALIDA SE DATA FINAL E MENOR OU IGUAL A DATA INICIAL
@@ -78,8 +87,9 @@ function valida_data() {
         {
             document.getElementById('data_maior').focus();
         }, 0);
+        <?php echo 'teste data final menor ou igual a data inicial'?>
         return false; 
-
+        
     }
 
     //VALIDA SE DATA DE ENCERAMENTO E MENOR QUE A DATA INICIAL
@@ -91,7 +101,9 @@ function valida_data() {
         {
             document.getElementById('data_encerramento').focus();
         }, 0);
-        return false; 
+        <?php echo 'teste data encerramento menor que data inicial'?>
+        return false;
+         
     }   
 
     //VALIDAR SE DATA ENCERRAMENTO E MENOR OU IGUAL QUE A DATA PEDIDO
@@ -102,18 +114,23 @@ function valida_data() {
         {
             document.getElementById('data_encerramento').focus();
         }, 0);
+        <?php echo 'teste data encerramento menor que data pedido'?>
         return false;
+
+        
     }
 
     //VALIDAR SE DATA FINAL E MENOR OU IGUAL A DATA PEDIDO
     if(data_final <= data_pedido){
-        alert("Data De Encerramento Não Pode Ser Menor Que A Data Pedido");
+        alert("Data De final Não Pode Ser Menor Que A Data Pedido");
         document.getElementById('data_final').value= "";
         window.setTiemout(function ()
         {
             document.getElementById('data_final').focus();
         }, 0);
+        <?php echo 'teste data final menor que data pedido'?>
         return false;
+        
     }  
 
     //VALIDAR SE DATA INICIO E MENOR QUE DATA PEDIDO
@@ -124,6 +141,7 @@ function valida_data() {
         {
             document.getElementById('data_inicio').focus();
         }, 0);
+        <?php echo 'teste data inicio menor que data pedido'?>
         return false;
     }  
 
