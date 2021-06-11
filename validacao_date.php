@@ -102,5 +102,14 @@
             return false;
         }  
 
+        if(data_inicial >= data_fim){
+            alert("Hora Inicio Não Pode Ser Maior ou Igual A Data Encerramento");
+            document.getElementById('id_data_menor').value= "";
+            window.setTiemout(function ()
+            {
+                document.getElementById('id_data_menor').focus();
+            }, 0);
+            return false;
+        }  
     }
 </script>
