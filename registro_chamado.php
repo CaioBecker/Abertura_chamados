@@ -443,5 +443,9 @@
 
 <?php
     include 'rodape.php';
+?>
+
+
+<?php
     include 'validacao_date.php';
 ?>
