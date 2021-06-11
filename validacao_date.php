@@ -53,7 +53,7 @@
 
       //VALIDA SE DATA FINAL E MENOR OU IGUAL A DATA INICIAL
         if(data_final <= data_inicial ){
-            alert("A Data Final não pode ser menor ou igual a Data Inicial");
+            alert("A Data Final Não Pode Ser menor Ou Igual A Data Inicial");
             document.getElementById('id_data_maior').value = "";
             window.setTimeout(function ()
             {
@@ -71,8 +71,8 @@
             }, 0);
         }
 
-        if(data_fim < data_final ){
-            alert("A Data Final não pode ser maior que a Data Fim");
+        if(data_fim <= data_final ){
+            alert("A Data Final Não Pode Ser Maior Ou Igual A Data Fim");
             document.getElementById('id_data_maior').value = "";
             window.setTimeout(function ()
             {
@@ -92,8 +92,8 @@
         var data_fim = document.getElementById('id_data_encerramento').value;
 
         //VALIDAR SE DATA INICIO E MENOR QUE DATA PEDIDO
-        if(data_inicial < data_pedido){
-            alert("Hora Inicio Não Pode Ser Menor Que A Data Pedido");
+        if(data_inicial <= data_pedido){
+            alert("Hora Inicio Não Pode Ser Menor Ou Igual A Data Pedido");
             document.getElementById('id_data_menor').value= "";
             window.setTiemout(function ()
             {
@@ -110,6 +110,36 @@
                 document.getElementById('id_data_menor').focus();
             }, 0);
             return false;
-        }  
+        }
+
+        if(data_inicial = data_final){
+            alert("Hora Inicio Não Pode Ser Igual A Data Final");
+            document.getElementById('id_data_menor').value= "";
+            window.setTiemout(function ()
+            {
+                document.getElementById('id_data_menor').focus();
+            }, 0);
+            return false;
+        }
+
+    }
+
+    function valida_data_pedido(){
+
+        var data_inicial = document.getElementById('id_data_menor').value;
+        var data_final = document.getElementById('id_data_maior').value;
+        var data_pedido = document.getElementById('id_data_pedido').value;
+        var data_fim = document.getElementById('id_data_encerramento').value;
+
+        if(data_inicial = data_pedido){
+            alert("Hora Inicio Não Pode Ser  Igual A Data Encerramento");
+            document.getElementById('id_data_pedido').value= "";
+            window.setTiemout(function ()
+            {
+                document.getElementById('id_data_pedido').focus();
+            }, 0);
+            return false;
+        }
+
     }
 </script>
