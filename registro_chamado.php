@@ -11,7 +11,15 @@
 ?>
 
 <h11><i class="fas fa-user-alt"></i> Registro de Chamados</h11>
-<h27> <a href="home.php" style="color: #444444; text-decoration: none;"> <i class="fa fa-reply" aria-hidden="true"></i> Voltar </a> </h27> 
+<h27> <a href="home.php" style="color: #444444; text-decoration: none;"> <i class="fa fa-reply" aria-hidden="true"></i> Voltar </a> </h27>
+
+</br>
+
+ <!--MENSAGENS-->
+ <?php
+        include 'js/mensagens.php';
+        include 'js/mensagens_usuario.php';
+?>
 
 <form method="post" action="prc_registro_chamado.php">
     <div class="div_br"></div>
@@ -41,13 +49,15 @@
             <div class="form-group col-md-4">
                 Motivo da OS
                 <select name="frm_motivo_os" class="form-control">
-                <?php               
+                <?php      
+                
+                    $var_real_cd_tipo_os = $row_tipo_os_usuario['CD_TIPO_OS'];
                      
                      $consulta_mot_serv_real = "SELECT MOS.CD_MOT_SERV, MOS.DS_MOT_SERV
                                                 FROM dbamv.MOT_SERV MOS
                                                 WHERE MOS.CD_TIPO_OS = $var_real_cd_tipo_os";
  
-                     //echo $consulta_mot_serv_real;
+                     echo $consulta_mot_serv_real;
  
                      $result_mot_serv_real = oci_parse($conn_ora, $consulta_mot_serv_real);							
  
@@ -228,7 +238,12 @@
             <!--SETOR-->
             <div class="form-group col-md-4">
                 <label>Setor</label>
-                <select name="frm_setor" class="form-control" disabled>
+
+
+                <!--HIDDEN-->
+                <input type="hidden" value="<?php echo $row_setor_usuario['CD_SETOR'];?>" class="form-control" name="frm_setor">
+
+                <select name="frm_setor_show" class="form-control" disabled>
                     
                 <!--IF USUARIO-->
                 <?php
@@ -254,10 +269,17 @@
                 ?>
                 </select>
             </div>
+
             <!--ESPECIALIDADE-->
             <div class="form-group col-md-4">
                 <label>Especialidade</label>
-                <select name="frm_especialidade" class="form-control" disabled>
+
+                <!--HIDDEN-->
+                <input type="hidden" value="<?php echo $row_especialidade_usuario['CD_ESPEC'];?>" class="form-control" name="frm_especialidade">
+
+
+
+                <select name="frm_especialidade_show" class="form-control" disabled>
                 <?php
                     //SE JA EXISTIR ESPECIALIDADE CADASTRADO PARA O USUARIO LOGADO
                     if(isset($row_especialidade_usuario['CD_ESPEC'])){
@@ -362,14 +384,18 @@
             <!--TIPO DO SERVICO-->
             <div class="form-group col-md-4">
                 <label>Tipo do Serviço </label>
-                <select name="frm_tipo_os" class="form-control" disabled>
+
+                <!--HIDDEN-->
+                <input type="hidden" value="<?php echo $row_tipo_os_usuario['CD_TIPO_OS'];?>" class="form-control" name="frm_tipo_os">
+
+                <select name="frm_tipo_os_show" class="form-control" disabled>
                         
                         
                 <?php
                     //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
                     if(isset($row_tipo_os_usuario['CD_TIPO_OS'])){
                         //EXIBA ELE
-                        $var_real_cd_tipo_os = $row_tipo_os_usuario['CD_TIPO_OS'];
+                        
                         echo  '<option value="'. $row_tipo_os_usuario['CD_TIPO_OS'] . '">' . $row_tipo_os_usuario['DS_TIPO_OS']. '</option>';
                     } else {
                                     
@@ -391,15 +417,21 @@
             <!--EMAIL-->
             <div class="form-group col-md-4">
                 <label>E-mail</label>
-                <input name="frm_email" input type="email" class="form-control"  
+                <!--HIDDEN-->
+                <input type="hidden" value="<?php echo $row_email_usuario['DS_EMAIL_ALTERNATIVO'];?>" class="form-control" name="email">
+
+                <input name="frm_email_show" input type="email" class="form-control"  
                 value="<?php echo $row_email_usuario['DS_EMAIL_ALTERNATIVO']; ?>" disabled>         
             
             </div>
 
             <!--RAMAL-->
             <div class="form-group col-md-2">
+                <!--HIDDEN-->
+                <input type="hidden" value="<?php echo $row_ramal_usuario['DS_RAMAL'];?>" class="form-control" name="ramal">
+
                 <label>Ramal</label>
-                <input type="number" class="form-control" name="frm_ramal" 
+                <input type="number" class="form-control" name="frm_ramal_show" 
                 value = "<?php echo   $row_ramal_usuario['DS_RAMAL']; ?>"
                 disabled>
             </div>                                                 

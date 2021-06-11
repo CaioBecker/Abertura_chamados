@@ -10,25 +10,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS PADRAO
     $var_usuario = $_SESSION['usuarioLogin2']; 
-    $var_setor = $_SESSION['setor'];
-    $var_especialidade = $_SESSION['especialidade'];
+    $var_setor =  $_POST['frm_setor'];
+    $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
     $var_localidade = $_POST['frm_localidade'];
     $var_motivo_os = $_POST['frm_motivo_os'];
     $var_tipo_os = $_POST['frm_tipo_os'];
-    $var_email = $_SESSION['email'];
-    $var_ramal = $_SESSION['ramal'];
+    $var_email = $_POST['email'];
+    $var_ramal = $_POST['ramal'];
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
     //$var_codigo = $_POST['cd_os'];
     $var_descricao = $_POST['ds_servico'];
-    $var_data_pedido = $_POST['dt_pedido'];
-    $var_data_encerramento = $_POST['dt_encerramento'];
+    $var_data_pedido =  date('d/m/Y H:m:s', strtotime($_POST['dt_pedido']));
+    $var_data_encerramento =  date('d/m/Y H:m:s', strtotime($_POST['dt_encerramento']));
     $var_usuario_responsavel = $_SESSION['usuarioLogin2'];
     $var_solicitante = $_POST['input_valor'];
     $var_observacao = $_POST['ds_observacao'];
     $var_cd_servico = $_POST['input_valor_servico'];
-    $var_hr_inicial = $_POST['hr_inicial'];
-    $var_hr_final = $_POST['hr_final'];
+    $var_hr_inicial =  date('d/m/Y H:m:s', strtotime($_POST['hr_inicial']));
+    $var_hr_final =  date('d/m/Y H:m:s', strtotime($_POST['hr_final']));
 
 
 
@@ -102,11 +102,10 @@ $row_nm_usuario = oci_fetch_array($result_nm_usuario);
 
 $consulta_tb_os = "INSERT INTO dbamv.SOLICITACAO_OS 
 SELECT SEQ_OS.NEXTVAL AS CD_OS, 
-SYSDATE AS DT_PEDIDO,
+TO_DATE('$var_data_pedido', 'dd/mm/yy hh24:mi:ss') AS DT_PEDIDO,
 '$var_descricao' as DS_SERVICO, 
 '$var_observacao' as DS_OBSERVACAO,
---'$var_data_encerramento' as DT_EXECUCAO,
-SYSDATE + 1 AS DT_EXECUCAO,
+TO_DATE('$var_data_encerramento', 'dd/mm/yy hh24:mi:ss') AS DT_EXECUCAO,
 NULL as DT_PREV_EXEC,
 '$var_solicitante' as NM_SOLICITANTE,
 'S' as TP_SITUACAO,
@@ -185,9 +184,9 @@ if (!$valida_chamado) {
       return 0;
 
   } else {
-    
-    $_SESSION['msg'] = 'Chamado registrado com sucesso com sucesso!';
-       header('location: home.php'); 
+
+      $_SESSION['msg'] = 'Chamado registrado com sucesso com sucesso!';
+      header('location: registro_chamado.php'); 
 
   }
 }
