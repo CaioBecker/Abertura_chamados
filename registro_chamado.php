@@ -39,7 +39,9 @@
             <div class="col-md-3">
                 Data Pedido:
                 <input class="form-control" type="datetime-local" name="dt_pedido" id="id_data_pedido" onblur="valida_data_pedido()" required>
+                
             </div>
+                <input class="form-control" type="hidden" name="dt_pedido_hd" id="id_data_pedido_hd" value=" $_SESSION['dt_pedido_hd'] " >
             <!--------DATA ENCERRAMENTO-------->
             <div class="col-md-3">
                 Data encerramento:

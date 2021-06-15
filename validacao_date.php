@@ -1,25 +1,12 @@
-
 <script type="text/javascript">
-
-    //function foca_data_maior() {
-
-      //  document.getElementById('data_maior').focus();                    
-    //};
-
-    //function foca_data_pedido() {
-
-      //  document.getElementById('data_pedido').focus();                    
-    //};
 
     function valida_data_fim() {
 
-        //RECEBE VALORES DO INPUT
         var data_inicial = document.getElementById('id_data_menor').value;
         var data_final = document.getElementById('id_data_maior').value;
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
 
-        //VALIDAR SE DATA ENCERRAMENTO E MENOR OU IGUAL QUE A DATA PEDIDO
         if(data_fim <= data_pedido){
             alert("Data De Encerramento Não Pode Ser Menor Que A Data Pedido");
             document.getElementById('id_data_encerramento').value= "";
@@ -31,7 +18,6 @@
             
         }
 
-          //VALIDA SE DATA DE ENCERAMENTO E MENOR QUE A DATA INICIAL
           if(data_fim <= data_inicial ){    
             alert("A Data De Encerramento Não Pode Ser Menor Que A Data Inicial");   
             document.getElementById('id_data_encerramento').value = "";
@@ -42,8 +28,6 @@
         }   
     }
 
-    
-
     function valida_data_final(){
 
         var data_inicial = document.getElementById('id_data_menor').value;
@@ -51,7 +35,6 @@
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
 
-      //VALIDA SE DATA FINAL E MENOR OU IGUAL A DATA INICIAL
         if(data_final <= data_inicial ){
             alert("A Data Final Não Pode Ser menor Ou Igual A Data Inicial");
             document.getElementById('id_data_maior').value = "";
@@ -61,7 +44,6 @@
             }, 0);    
         }
 
-            //VALIDAR SE DATA FINAL E MENOR OU IGUAL A DATA PEDIDO
         if(data_final <= data_pedido){
             alert("Data De final Não Pode Ser Menor Que A Data Pedido");
             document.getElementById('id_data_final').value= "";
@@ -79,9 +61,6 @@
                 document.getElementById('id_data_maior').focus();
             }, 0);    
         }
-
-      
-
     }
 
     function valida_data_inicial(){
@@ -91,7 +70,6 @@
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
 
-        //VALIDAR SE DATA INICIO E MENOR QUE DATA PEDIDO
         if(data_inicial <= data_pedido){
             alert("Hora Inicio Não Pode Ser Menor Ou Igual A Data Pedido");
             document.getElementById('id_data_menor').value= "";
@@ -121,7 +99,6 @@
             }, 0);
             return false;
         }
-
     }
 
     function valida_data_pedido(){
@@ -130,16 +107,11 @@
         var data_final = document.getElementById('id_data_maior').value;
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
-
-        if(data_inicial = data_pedido){
-            alert("Hora Inicio Não Pode Ser  Igual A Data Encerramento");
-            document.getElementById('id_data_pedido').value= "";
-            window.setTiemout(function ()
-            {
-                document.getElementById('id_data_pedido').focus();
-            }, 0);
-            return false;
+        var disabled_pedido = document.getElementById('id_data_pedido');
+        
+        if(data_pedido != ''){
+            document.getElementById('id_data_pedido_hd').value = data_pedido;
+            disabled_pedido.disabled = true; 
         }
-
     }
 </script>
