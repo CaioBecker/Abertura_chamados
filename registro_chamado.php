@@ -38,9 +38,8 @@
             <!--------DATA PEDIDO-------------->
             <div class="col-md-3">
                 Data Pedido:
-                <input class="form-control" type="datetime-local" name="dt_pedido_show" id="id_data_pedido_show" onblur="valida_data_pedido()" required>
+                <input class="form-control" type="datetime-local" name="dt_pedido_show" id="id_data_pedido_show" onblur="valida_data_pedido_teste()" required>
                 <input type="hidden" name="dt_pedido" id="id_data_pedido">
-                
             </div>
             <!--------DATA ENCERRAMENTO-------->
             <div class="col-md-3">
@@ -206,14 +205,14 @@
             <!--------HORA INICIAL------------->
             <div class="col-md-3">
                 Hora inicial:
-                <input class="form-control" type="datetime-local" name="hr_inicial" id="id_data_menor"
+                <input class="form-control" type="datetime-local" name="hr_inicial" id="id_hr_inicial"
                 onblur="valida_data_inicial()"
                  required>
             </div>
             <!--------HORA FNAL---------------->
             <div class="col-md-3">
                 Hora final:
-                <input class="form-control" type="datetime-local" name="hr_final" id="id_data_maior" 
+                <input class="form-control" type="datetime-local" name="hr_final" id="id_hr_final" 
                 onblur="valida_data_final()" required>
             </div>
 
