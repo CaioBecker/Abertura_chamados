@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   TO_DATE('$var_data_encerramento', 'dd/mm/yy hh24:mi:ss') AS DT_EXECUCAO,
   NULL as DT_PREV_EXEC,
   '$var_solicitante' as NM_SOLICITANTE,
-  'S' as TP_SITUACAO,
+  'C' as TP_SITUACAO,
   '$var_setor' as CD_SETOR, 
   1 as CD_MULTI_EMPRESA,
   '$var_especialidade' as CD_ESPEC,

@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Nome do Funcionario</label>
-                    <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" >  
+                    <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" readonly>  
                 </div>
                 <!--SETOR-->
                 <div class="form-group col-md-4">

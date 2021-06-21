@@ -8,8 +8,8 @@ $var_USUARIO = $_SESSION['usuarioLogin2'];
 $consulta_cd_func_usuario = 
 "SELECT func.CD_FUNC, func.NM_FUNC
 FROM dbamv.FUNCIONARIO func
-INNER JOIN dbamv.portal_cham_config_padrao cp
-  ON cp.CD_SETOR = func.CD_SETOR
+LEFT JOIN dbamv.portal_cham_config_padrao cp
+  ON cp.CD_FUNC = func.CD_FUNC
 WHERE func.SN_ATIVO = 'S'
 AND UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
 

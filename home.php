@@ -1,4 +1,6 @@
 <?php 
+
+
     @session_start();	
 
     //CABECALHO
@@ -11,7 +13,6 @@
     //include 'acesso_restrito.php';
 
 ?>
-
 
 <div class="div_br"> </div>
 
