@@ -9,7 +9,9 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS PADRAO
-    $var_usuario = $_SESSION['usuarioLogin2']; 
+    $var_usuario = $_SESSION['usuarioLogin2'];
+    $var_cd_func = $_POST['frm_cd_func'];
+    $var_nm_func = $_POST['frm_nm_func']; 
     $var_setor =  $_POST['frm_setor'];
     $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
@@ -21,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
     //$var_codigo = $_POST['cd_os'];
     $var_descricao = $_POST['ds_servico'];
-    $var_data_pedido =  date('d/m/Y H:m:s', strtotime($_POST['dt_pedido_hd']));
+    $var_data_pedido =  date('d/m/Y H:m:s', strtotime($_POST['dt_pedido']));
     $var_data_encerramento =  date('d/m/Y H:m:s', strtotime($_POST['dt_encerramento']));
     $var_usuario_responsavel = $_SESSION['usuarioLogin2'];
     $var_solicitante = $_POST['input_valor'];
@@ -34,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //EXIBINDO VARIAVÉS PADRAO
     echo '</br>USUARIO: '; echo $var_usuario;
+    echo '</br>CD_FUNC: '; echo $var_cd_func;
+    echo '</br>NM_FUNC: '; echo $var_nm_func;
     echo '</br>CD_SETOR: '; echo $var_setor;
     echo '</br>CD_ESPECIALIDADE: '; echo $var_especialidade;
     echo '</br>CD_OFICINA: '; echo $var_oficina;
@@ -42,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>CD_TIPO_OS:' ; echo $var_tipo_os;
     echo '</br>EMAIL:' ; echo $var_email;
     echo '</br>RAMAL:' ; echo $var_ramal;
+    echo '</br>RAMAL:' ; echo $var_cd_func; 
     //EXIBIR VARIAVEIS REGISTRO CHAMADO
     echo '</br>CODIGO: SERÁ UM NEXTVAL';
     echo '</br>DESCRIÇÂO:'; echo $var_descricao;
@@ -53,9 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>TIPO DO SERVIÇO:'; echo $var_cd_servico;
     echo '</br>HORA INICIAL:'; echo $var_hr_inicial;
     echo '</br>HORA FINAL:'; echo $var_hr_final;
-
-
-   
 
     ////////////////////
    ///CODIGO SERVICO///
@@ -75,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     echo '</br>CODIGO DO SETOR:'; echo @$row_cd_servico['CD_SERVICO'];
 
+  $cd_tp_servico = $row_cd_servico['CD_SERVICO'];  
    ////////////////////
   ///NOME USUARIO/////
  ////////////////////
@@ -100,17 +103,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   ///CONSULTA BANCO/// 
  ////////////////////
 
- $consulta_nextval="SELECT SEQ_OS.NEXTVAL AS CD_OS FROM DUAL";
 
- $result_nextval = oci_parse($conn_ora, $consulta_nextval);							
+//nextval os
+  $consulta_nextval="SELECT SEQ_OS.NEXTVAL AS CD_OS FROM DUAL";
 
-  //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+  $result_nextval = oci_parse($conn_ora, $consulta_nextval);							
+
+//EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
   $nextval = oci_execute($result_nextval);
   $row_nextval = oci_fetch_array($result_nextval);
 
   $var_nextval = $row_nextval['CD_OS']; 
+//nextval serviço
+  $consulta_nextval_serv="SELECT SEQ_SERV.NEXTVAL AS CD_ITSOLICITACAO_OS FROM DUAL";
+
+  $result_nextval_serv = oci_parse($conn_ora, $consulta_nextval_serv);							
+
+//EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+  $nextval_serv = oci_execute($result_nextval_serv);
+  $row_nextval_serv = oci_fetch_array($result_nextval_serv);
+
+  $var_nextval_serv = $row_nextval_serv['CD_ITSOLICITACAO_OS']; 
 
 
+
+  //////////////////
+ ////////OS////////
+//////////////////
   $consulta_tb_os = "INSERT INTO dbamv.SOLICITACAO_OS 
   SELECT $var_nextval AS CD_OS,
   TO_DATE('$var_data_pedido', 'dd/mm/yy hh24:mi:ss') AS DT_PEDIDO,
@@ -184,20 +203,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $result_tb_os = oci_parse($conn_ora, $consulta_tb_os);							
 
   //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+   
   $valida_chamado = oci_execute($result_tb_os);
 
+  //$var_total_hora = $var_hr_final - $var_hr_inicial;
+
+  /////////////////////////
+ /////////Serviço/////////
+/////////////////////////
+
+$consulta_tb_serv="INSERT INTO itsolicitacao_os
+SELECT
+$var_nextval_serv AS CD_ITSOLICITACAO_OS,
+TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
+TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
+NULL AS VL_TEMPO_GASTO,
+$var_nextval AS CD_OS,
+$var_cd_func AS CD_FUNC,
+$cd_tp_servico AS CD_SERVICO,
+NULL AS VL_TEMPO_GASTO_MIN,
+NULL AS DS_SERVICO,
+'S' AS SN_CHECK_LIST,
+NULL AS VL_REAL,
+NULL AS CD_BEM,
+NULL AS VL_REFERENCIA,
+NULL AS CD_LEITURA,
+NULL AS VL_HORA,
+NULL AS VL_HORA_EXTRA,
+NULL AS VL_EXTRA,
+NULL AS VL_EXTRA_MIN,
+NULL AS DS_FUNCIONARIO,
+NULL AS CD_ITSOLICITACAO_OS_INTEGRA,
+NULL AS CD_SEQ_INTEGRA,
+NULL AS DT_INTEGRA,
+NULL AS CD_ITSOLICITACAO_OS_FILHA,
+NULL AS CD_TIPO_PROCEDIMENTO_PLANO  
+FROM DUAL
+";
+echo "--------------------------------------------------------------------------------------------------</br>";
+echo $consulta_tb_serv;
+
+$result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
+
+//EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+ 
+$valida_servico = oci_execute($result_tb_serv);
+
+/////////////
   //VALIDACAO
-  if (!$valida_chamado) {   
+  if (!$valida_chamado && !$valida_servico) {   
 
     $erro = oci_error($result_tb_os);																							
     $_SESSION['msgerro'] = htmlentities($erro['message']);
-    header('location: registro_chamado.php'); 
+    //header('location: registro_chamado.php'); 
     return 0;
 
   }else {
 
     $_SESSION['msg'] = 'Chamado registrado com sucesso com sucesso!';
-    header('location: home.php'); 
+    //header('location: home.php'); 
 
   }
 }

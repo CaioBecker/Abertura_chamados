@@ -2,6 +2,27 @@
 
 $var_USUARIO = $_SESSION['usuarioLogin2'];
 
+/////////////////////
+//CODIGO FUNSUARIO//
+///////////////////
+$consulta_cd_func_usuario = 
+"SELECT func.CD_FUNC, func.NM_FUNC
+FROM dbamv.FUNCIONARIO func
+INNER JOIN dbamv.portal_cham_config_padrao cp
+  ON cp.CD_SETOR = func.CD_SETOR
+WHERE func.SN_ATIVO = 'S'
+AND UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
+
+$result_cd_func_usuario = oci_parse($conn_ora, $consulta_cd_func_usuario);							
+
+//EXECUTANDO A CONSULTA SQL (ORACLE)
+oci_execute($result_cd_func_usuario);	
+$row_cd_func_usuario = oci_fetch_array($result_cd_func_usuario);
+
+
+
+
+
 /////////////////
 //SETOR USUARIO//
 /////////////////

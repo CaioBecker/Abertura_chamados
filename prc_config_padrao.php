@@ -9,7 +9,9 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS 
-    $var_usuario = $_SESSION['usuarioLogin2']; 
+    $var_usuario = $_SESSION['usuarioLogin2'];
+    $var_cd_func = $_POST['frm_cd_func'];
+    $var_nm_func = $_POST['frm_nm_func'];
     $var_setor = $_POST['frm_setor'];
     $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
@@ -46,9 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
    $inserir_config_padrao = "INSERT INTO PORTAL_CHAM_CONFIG_PADRAO
                             (CD_USUARIO, CD_SETOR, CD_ESPEC, CD_TIPO_OS, CD_LOCALIDADE,
-                            CD_MOT_SERV, CD_SERVICO, DS_EMAIL_ALTERNATIVO, DS_RAMAL, CD_OFICINA)
+                            CD_MOT_SERV, CD_SERVICO, DS_EMAIL_ALTERNATIVO, DS_RAMAL, CD_OFICINA, CD_FUNC, NM_FUNC)
                             VALUES (UPPER('$var_usuario'),'$var_setor','$var_especialidade','$var_tipo_os',
-                                    '$var_localidade','$var_motivo_os','$var_tipo_os','$var_email','$var_ramal','$var_oficina')";
+                                    '$var_localidade','$var_motivo_os','$var_tipo_os','$var_email','$var_ramal','$var_oficina', '$var_cd_func', '$var_nm_func')";
     
     echo '<br>';
 

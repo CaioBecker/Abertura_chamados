@@ -38,10 +38,10 @@
             <!--------DATA PEDIDO-------------->
             <div class="col-md-3">
                 Data Pedido:
-                <input class="form-control" type="datetime-local" name="dt_pedido" id="id_data_pedido" onblur="valida_data_pedido()" required>
+                <input class="form-control" type="datetime-local" name="dt_pedido_show" id="id_data_pedido_show" onblur="valida_data_pedido()" required>
+                <input type="hidden" name="dt_pedido" id="id_data_pedido">
                 
             </div>
-                <input class="form-control" type="hidden" name="dt_pedido_hd" id="id_data_pedido_hd" value=" $_SESSION['dt_pedido_hd'] " >
             <!--------DATA ENCERRAMENTO-------->
             <div class="col-md-3">
                 Data encerramento:
@@ -233,76 +233,31 @@
             <!--USUARIO-->
             <div class="form-group col-md-4">
                 <label>Usuário</label>
-                <input type="text" value="<?php echo @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" disabled>
+                <input type="text" value="<?php echo @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" readonly>
             </div>
 
+            <div class="form-group col-md-2">
+                <label>Codigo de Funcionario</label>
+                <input type="text" value="<?php echo @$row_cd_func_usuario['CD_FUNC'];?>" class="form-control" id="id_cd_func" name="frm_cd_func" readonly>  
+            </div>
+            
+            <div class="form-group col-md-4">
+                <label>Nome do Funcionario</label>
+                <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" readonly>  
+            </div>
                     
             <!--SETOR-->
             <div class="form-group col-md-4">
                 <label>Setor</label>
-
-
-                <!--HIDDEN-->
-                <input type="hidden" value="<?php echo $row_setor_usuario['CD_SETOR'];?>" class="form-control" name="frm_setor">
-
-                <select name="frm_setor_show" class="form-control" disabled>
-                    
-                <!--IF USUARIO-->
-                <?php
-                    //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
-                    if(isset($row_setor_usuario['CD_SETOR'])){
-                    //EXIBA ELE
-                    echo  '<option value="'. $row_setor_usuario['CD_SETOR'] . '">' . $row_setor_usuario['NM_SETOR']. '</option>';
-                    } else {
-                    //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                    echo "<option value=''>SELECIONE UM VALOR</option>";
-                    }
-
-                ?>
-
-                <!--TRAS TODOS OS SETORES ATIVOS-->
-                <?php
-                    //EXIBE TODAS AS OPCOES
-                    while($row_setor = oci_fetch_array($result_setor)){	
-
-                        echo  '<option value="'. $row_setor['CD_SETOR'] . '">' . $row_setor['NM_SETOR']. '</option>';
-                                
-                    }
-                ?>
-                </select>
+                <input type="text" name="frm_setor_show" class="form-control" value="<?php echo $row_setor_usuario['NM_SETOR']; ?>" readonly>
+                <input type="hidden" name="frm_setor" value="<?php echo $row_setor_usuario['CD_SETOR']; ?>">
             </div>
 
             <!--ESPECIALIDADE-->
             <div class="form-group col-md-4">
                 <label>Especialidade</label>
-
-                <!--HIDDEN-->
-                <input type="hidden" value="<?php echo $row_especialidade_usuario['CD_ESPEC'];?>" class="form-control" name="frm_especialidade">
-
-
-
-                <select name="frm_especialidade_show" class="form-control" disabled>
-                <?php
-                    //SE JA EXISTIR ESPECIALIDADE CADASTRADO PARA O USUARIO LOGADO
-                    if(isset($row_especialidade_usuario['CD_ESPEC'])){
-                        //EXIBA ELE
-                        echo  '<option value="'. $row_especialidade_usuario['CD_ESPEC'] . '">' . $row_especialidade_usuario['DS_ESPEC']. '</option>';
-                    } else {
-                        //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                        echo "<option value=''>SELECIONE UM VALOR</option>";
-                    }
-                ?>
-
-                <?php
-                    //EXIBE TODAS AS OPCOES
-
-                    while($row_especialidade = oci_fetch_array($result_especialidade)){	
-
-                        echo  '<option value="'. $row_especialidade['CD_ESPEC'] . '">' . $row_especialidade['DS_ESPEC']. '</option>';
-                                        
-                    }              
-                ?>
-                </select>
+                <input type="text" name="frm_especialidade show" value="<?php echo $row_especialidade_usuario['DS_ESPEC']; ?>" class="form-control" readonly>
+                <input type="hidden" name="frm_especialidade" value="<?php echo $row_especialidade_usuario['CD_ESPEC']; ?>">        
             </div>
 
             <!--SEGUNDA LINHA -->
@@ -310,52 +265,8 @@
             <!--OFICINA-->
             <div class="form-group col-md-4">
                 <label>Oficina</label>
-
-                <select name="frm_oficina" class="form-control" hidden>
-
-                <!--IF USUARIO-->
-                <?php
-                    //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
-                    if(isset($row_oficina_usuario['CD_OFICINA'])){
-                        //EXIBA ELE
-                        echo  '<option value="'. $row_oficina_usuario['CD_OFICINA'] . '">' . $row_oficina_usuario['DS_OFICINA']. '</option>';
-                    } else {
-                        //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                            echo "<option value=''>SELECIONE UM VALOR</option>";
-                    }
-
-                ?>
-                    
-                <?php
-                    while($row_oficina = oci_fetch_array($result_oficina)){ 
-
-                        echo '<option value="' .$row_oficina['CD_OFICINA'] . '">' . $row_oficina['DS_OFICINA']. '</option>';
-                    }
-                ?>
-                </select>
-
-                <select name="frm_oficina_show" class="form-control" disabled>
-
-                    <!--IF USUARIO-->
-                    <?php
-                        //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
-                        if(isset($row_oficina_usuario['CD_OFICINA'])){
-                            //EXIBA ELE
-                            echo  '<option value="'. $row_oficina_usuario['CD_OFICINA'] . '">' . $row_oficina_usuario['DS_OFICINA']. '</option>';
-                        } else {
-                            //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                                echo "<option value=''>SELECIONE UM VALOR</option>";
-                        }
-
-                    ?>
-                    
-                    <?php
-                        while($row_oficina = oci_fetch_array($result_oficina)){ 
-
-                            echo '<option value="' .$row_oficina['CD_OFICINA'] . '">' . $row_oficina['DS_OFICINA']. '</option>';
-                        }
-                    ?>
-                </select>
+                <input type="text" name="frm_oficina_show" class="form-control" value="<?php echo  $row_oficina_usuario['DS_OFICINA']; ?>" readonly>
+                <input type="hidden" name="frm_oficina" value="<?php echo $row_oficina_usuario['CD_OFICINA']; ?>">        
             </div>       
 
             <!--LOCALIDADE-->
@@ -386,32 +297,8 @@
             <!--TIPO DO SERVICO-->
             <div class="form-group col-md-4">
                 <label>Tipo do Serviço </label>
-
-                <!--HIDDEN-->
-                <input type="hidden" value="<?php echo $row_tipo_os_usuario['CD_TIPO_OS'];?>" class="form-control" name="frm_tipo_os">
-
-                <select name="frm_tipo_os_show" class="form-control" disabled>
-                        
-                        
-                <?php
-                    //SE JA EXISTIR TIPO DO SERVICO CADASTRADO PARA O USUARIO LOGADO
-                    if(isset($row_tipo_os_usuario['CD_TIPO_OS'])){
-                        //EXIBA ELE
-                        
-                        echo  '<option value="'. $row_tipo_os_usuario['CD_TIPO_OS'] . '">' . $row_tipo_os_usuario['DS_TIPO_OS']. '</option>';
-                    } else {
-                                    
-                        //SENAO SOLICITA QUE SE SELECIONE UM VALOR
-                        echo "<option value=''>SELECIONE UM VALOR</option>";
-                    }
-                ?>
-                <?php
-                    while($row_tipo_os = oci_fetch_array($result_tipo_os)){ 
-
-                        echo '<option value="' .$row_tipo_os['CD_TIPO_OS'] . '">' . $row_tipo_os['DS_TIPO_OS'] . '</option>';
-                    }
-                ?>
-                </select>                            
+                <input type="text" name="frm_tipo_os_show" class="form-control" value="<?php echo $row_tipo_os_usuario['DS_TIPO_OS']; ?>" readonly>                        
+                <input type="hidden" name="frm_tipo_os" value="<?php echo $row_tipo_os_usuario['CD_TIPO_OS']; ?>">        
             </div>
 
            
@@ -419,23 +306,15 @@
             <!--EMAIL-->
             <div class="form-group col-md-4">
                 <label>E-mail</label>
-                <!--HIDDEN-->
-                <input type="hidden" value="<?php echo $row_email_usuario['DS_EMAIL_ALTERNATIVO'];?>" class="form-control" name="email">
-
-                <input name="frm_email_show" input type="email" class="form-control"  
-                value="<?php echo $row_email_usuario['DS_EMAIL_ALTERNATIVO']; ?>" disabled>         
-            
+                <input name="email" input type="email" class="form-control"  
+                value="<?php echo $row_email_usuario['DS_EMAIL_ALTERNATIVO']; ?>" readonly>         
             </div>
 
             <!--RAMAL-->
             <div class="form-group col-md-2">
-                <!--HIDDEN-->
-                <input type="hidden" value="<?php echo $row_ramal_usuario['DS_RAMAL'];?>" class="form-control" name="ramal">
-
                 <label>Ramal</label>
-                <input type="number" class="form-control" name="frm_ramal_show" 
-                value = "<?php echo   $row_ramal_usuario['DS_RAMAL']; ?>"
-                disabled>
+                <input type="number" class="form-control" name="ramal" 
+                value = "<?php echo   $row_ramal_usuario['DS_RAMAL']; ?>"readonly>
             </div>                                                 
 
     </div>

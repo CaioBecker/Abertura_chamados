@@ -1,8 +1,22 @@
 <?php
 
-/////////
-//SETOR//
-/////////
+
+  /////////////
+ ///CD FUNC///
+/////////////
+$var_cd_func = @$_SESSION['frm_cd_func'];
+
+$consulta_cd_func =
+"SELECT * FROM dbamv.FUNCIONARIO
+WHERE CD_FUNC = '$var_cd_func'
+AND SN_ATIVO = 'S'";
+
+$result_cd_func = oci_parse($conn_ora, $consulta_cd_func);
+
+oci_execute($result_cd_func);	
+  ///////////
+ ///SETOR///
+///////////
 
 $consulta_setor = 
 "SELECT st.CD_SETOR, st.NM_SETOR
@@ -15,8 +29,8 @@ $result_setor = oci_parse($conn_ora, $consulta_setor);
 //EXECUTANDO A CONSULTA SQL (ORACLE)
 oci_execute($result_setor);	
 					
-/////////////////
-//ESPECIALIDADE//
+  ///////////////// 
+ //ESPECIALIDADE//
 /////////////////
 
 $consulta_especialidade =

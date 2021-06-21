@@ -32,12 +32,19 @@
             <div class="form-row">
 
                 <!--USUARIO-->
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                     <label>Usuário</label>
-                    <input type="text" value="<?php echo @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" disabled>
+                    <input type="text" value="<?php echo $var_cd_func = @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" disabled>
                 </div>
 
-                
+                <div class="form-group col-md-2">
+                    <label>Codigo de Funcionario</label>
+                    <input type="text" value="<?php echo @$row_cd_func_usuario['CD_FUNC'];?>" class="form-control" id="id_cd_func" name="frm_cd_func" onblur="funcao_cd_func()">  
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Nome do Funcionario</label>
+                    <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" >  
+                </div>
                 <!--SETOR-->
                 <div class="form-group col-md-4">
                 <label>Setor</label>
@@ -219,4 +226,6 @@
 <?php
     //RODAPE
     include 'rodape.php';
+
+    include 'js_config_padrao.php';
 ?>

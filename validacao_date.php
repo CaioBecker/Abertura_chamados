@@ -107,10 +107,10 @@
         var data_final = document.getElementById('id_data_maior').value;
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
-        var disabled_pedido = document.getElementById('id_data_pedido');
+        var disabled_pedido = document.getElementById('id_data_pedido_show');
         
         if(data_pedido != ''){
-            document.getElementById('id_data_pedido_hd').value = data_pedido;
+            document.getElementById('id_data_pedido').value = data_pedido;
             disabled_pedido.disabled = true; 
         }
     }
