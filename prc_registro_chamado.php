@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $var_nextval = $row_nextval['CD_OS']; 
 //nextval serviço
-  $consulta_nextval_serv="SELECT SEQ_SERV.NEXTVAL AS CD_ITSOLICITACAO_OS FROM DUAL";
+  $consulta_nextval_serv="SELECT SEQ_ITOS.NEXTVAL AS CD_ITSOLICITACAO_OS FROM DUAL";
 
   $result_nextval_serv = oci_parse($conn_ora, $consulta_nextval_serv);							
 
