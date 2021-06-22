@@ -245,7 +245,7 @@
 
             </div>
 
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
 
         </form>
               

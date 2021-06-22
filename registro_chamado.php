@@ -26,7 +26,7 @@
     <div class="div_br"></div>
     <!-------------------CHAMADOS------------------------------------------->
     <div class="fnd_azul">
-        Chamado
+        Chamado:
     </div>
     <div class="div_br"></div>
         <div class="form-row">
@@ -77,7 +77,7 @@
             <!--------FUNCIONARIO RESPONSAVEL-->
             <div class="col-md-3">
                 Funcionario Responsavel:
-                <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo @$_SESSION['usuarioLogin2'];?>" disabled>
+                <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo strtoupper(@$_SESSION['usuarioLogin2']);?>" disabled>
             </div>
 
             <div class="col-md-3">
@@ -232,16 +232,16 @@
             <!--USUARIO-->
             <div class="form-group col-md-4">
                 <label>Usuário</label>
-                <input type="text" value="<?php echo @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" readonly>
+                <input type="text" value="<?php echo strtoupper(@$_SESSION['usuarioLogin2']);?>" class="form-control" name="frm_usuario" readonly>
             </div>
 
-            <div class="form-group col-md-2">
-                <label>Codigo de Funcionario</label>
+            <div class="form-group col-md-3">
+                <label>Codigo de Funcionário:</label>
                 <input type="text" value="<?php echo @$row_cd_func_usuario['CD_FUNC'];?>" class="form-control" id="id_cd_func" name="frm_cd_func" readonly>  
             </div>
             
-            <div class="form-group col-md-4">
-                <label>Nome do Funcionario</label>
+            <div class="form-group col-md-5">
+                <label>Nome do Funcionário:</label>
                 <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" readonly>  
             </div>
                     
@@ -317,7 +317,7 @@
             </div>                                                 
 
     </div>
-    <button type="submit" class="btn btn-primary">Salvar</button>                           
+    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>                           
 </form>
 
 
