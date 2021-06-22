@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       } else {
 
         $_SESSION['msg'] = 'Configuração atualizado com sucesso!';
-           header('location: home.php'); 
+           header('location: config_padrao.php'); 
 
       }
 }

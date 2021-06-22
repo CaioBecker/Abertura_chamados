@@ -32,19 +32,49 @@
             <div class="form-row">
 
                 <!--USUARIO-->
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-4">
                     <label>Usuário</label>
-                    <input type="text" value="<?php echo $var_cd_func = @$_SESSION['usuarioLogin2'];?>" class="form-control" name="frm_usuario" disabled>
+                    <input type="text" value="<?php echo $var_cd_func = strtoupper(@$_SESSION['usuarioLogin2']);?>" class="form-control" name="frm_usuario" disabled>
                 </div>
 
-                <div class="form-group col-md-2">
-                    <label>Codigo de Funcionario</label>
-                    <input type="text" value="<?php echo @$row_cd_func_usuario['CD_FUNC'];?>" class="form-control" id="id_cd_func" name="frm_cd_func" onblur="funcao_cd_func()">  
+                 <div class="form-group col-md-4">
+                    <label>Funcionário</label>
+
+                    <select name="frm_cd_func" class="form-control" required>
+                    
+                        <!--IF USUARIO-->
+                        <?php
+                            //SE JA EXISTIR SETOR CADASTRADO PARA O USUARIO LOGADO
+                            if(isset($row_cd_func_usuario['CD_FUNC'])){
+                            //EXIBA ELE
+                            echo  '<option value="'. $row_cd_func_usuario['CD_FUNC'] . '">' . $row_cd_func_usuario['NM_FUNC']. '</option>';
+                            } else {
+                            //SENAO SOLICITA QUE SE SELECIONE UM VALOR
+                                echo "<option value=''>SELECIONE UM VALOR</option>";
+                            }
+
+                        ?>
+
+                        <!--TRAS TODOS OS SETORES ATIVOS-->
+                        <?php
+                            //EXIBE TODAS AS OPCOES
+                            while($row_cd_func = oci_fetch_array($result_cd_func)){	
+
+                                echo  '<option value="'. $row_cd_func['CD_FUNC'] . '">' . $row_cd_func['NM_FUNC']. '</option>';
+                                    
+                        }
+                        ?>
+
+                    </select>
                 </div>
-                <div class="form-group col-md-4">
+
+                <!-- <div class="form-group col-md-4">
                     <label>Nome do Funcionario</label>
                     <input type="text" value="<?php echo @$row_cd_func_usuario['NM_FUNC'];?>" class="form-control" id="id_nm_func" name="frm_nm_func" readonly>  
-                </div>
+                </div> -->
+
+                
+                
                 <!--SETOR-->
                 <div class="form-group col-md-4">
                 <label>Setor</label>

@@ -19,10 +19,6 @@ $result_cd_func_usuario = oci_parse($conn_ora, $consulta_cd_func_usuario);
 oci_execute($result_cd_func_usuario);	
 $row_cd_func_usuario = oci_fetch_array($result_cd_func_usuario);
 
-
-
-
-
 /////////////////
 //SETOR USUARIO//
 /////////////////
@@ -138,9 +134,10 @@ $result_email_usuario = oci_parse($conn_ora, $consulta_email_usuario);
 oci_execute($result_email_usuario);	
 $row_email_usuario = oci_fetch_array($result_email_usuario);
 
-/////////////////////
-//RAMAL USUARIO//
-/////////////////////
+  /////////////////
+ //RAMAL USUARIO//
+/////////////////
+
 $consulta_ramal_usuario =
 "SELECT cp.DS_RAMAL
 FROM DBAMV.PORTAL_CHAM_CONFIG_PADRAO cp
@@ -151,8 +148,6 @@ $result_ramal_usuario = oci_parse($conn_ora, $consulta_ramal_usuario);
 //EXECUTANDO A CONSULTA SQL (ORACLE)
 oci_execute($result_ramal_usuario);	
 $row_ramal_usuario = oci_fetch_array($result_ramal_usuario);
-
-
 
 
 ?>

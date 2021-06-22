@@ -1,19 +1,21 @@
 <?php
 
-
   /////////////
  ///CD FUNC///
 /////////////
+
 $var_cd_func = @$_SESSION['frm_cd_func'];
 
 $consulta_cd_func =
-"SELECT * FROM dbamv.FUNCIONARIO
-WHERE CD_FUNC = '$var_cd_func'
-AND SN_ATIVO = 'S'";
+"SELECT * 
+FROM dbamv.FUNCIONARIO func
+WHERE func.SN_ATIVO = 'S'
+ORDER BY func.NM_FUNC ASC";
 
 $result_cd_func = oci_parse($conn_ora, $consulta_cd_func);
 
 oci_execute($result_cd_func);	
+
   ///////////
  ///SETOR///
 ///////////
