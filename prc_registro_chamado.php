@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
     //$var_codigo = $_POST['cd_os'];
     $var_descricao = $_POST['ds_servico'];
-    $var_data_pedido =  date('d/m/Y H:m:s', strtotime($_POST['dt_pedido']));
-    $var_data_encerramento =  date('d/m/Y H:m:s', strtotime($_POST['dt_encerramento']));
+    $var_data_pedido =  date('d/m/Y H:i:s', strtotime($_POST['dt_pedido']));
+    $var_data_encerramento =  date('d/m/Y H:i:s', strtotime($_POST['dt_encerramento']));
     $var_usuario_responsavel = $_SESSION['usuarioLogin2'];
     $var_solicitante = $_POST['input_valor'];
     $var_observacao = $_POST['ds_observacao'];
     $var_cd_servico = $_POST['input_valor_servico'];
-    $var_hr_inicial =  date('d/m/Y H:m:s', strtotime($_POST['hr_inicial']));
-    $var_hr_final =  date('d/m/Y H:m:s', strtotime($_POST['hr_final']));
+    $var_hr_inicial =  date('d/m/Y H:i:s', strtotime($_POST['hr_inicial']));
+    $var_hr_final =  date('d/m/Y H:i:s', strtotime($_POST['hr_final']));
 
 
 
@@ -255,13 +255,13 @@ $valida_servico = oci_execute($result_tb_serv);
 
     $erro = oci_error($result_tb_os);																							
     $_SESSION['msgerro'] = htmlentities($erro['message']);
-    //header('location: registro_chamado.php'); 
+    header('location: registro_chamado.php'); 
     return 0;
 
   }else {
 
-    $_SESSION['msg'] = 'Chamado registrado com sucesso com sucesso!';
-    //header('location: home.php'); 
+    $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
+    header('location: home.php'); 
 
   }
 }

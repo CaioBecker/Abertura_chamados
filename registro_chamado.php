@@ -38,13 +38,13 @@
             <!--------DATA PEDIDO-------------->
             <div class="col-md-3">
                 Data Pedido:
-                <input class="form-control" type="datetime-local" name="dt_pedido_show" id="id_data_pedido_show" onblur="valida_data_pedido_teste()" required>
-                <input type="hidden" name="dt_pedido" id="id_data_pedido">
+                <input class="form-control" type="datetime-local" name="dt_pedido" id="id_data_pedido" onblur="valida_data_pedido()" required>
+                <!--<input type="hidden" name="dt_pedido" id="id_data_pedido">-->
             </div>
             <!--------DATA ENCERRAMENTO-------->
             <div class="col-md-3">
                 Data encerramento:
-                <input class="form-control" type="datetime-local" name="dt_encerramento" id="id_data_encerramento" onblur="valida_data_fim()"  required>
+                <input class="form-control" type="datetime-local" name="dt_encerramento" id="id_data_encerramento" onblur="valida_data_encerramento()"  required>
             </div>
             <!--------MOTIVO DO SERVICO-------->
             <div class="form-group col-md-4">
@@ -206,14 +206,14 @@
             <div class="col-md-3">
                 Hora inicial:
                 <input class="form-control" type="datetime-local" name="hr_inicial" id="id_hr_inicial"
-                onblur="valida_data_inicial()"
+                onblur="valida_hora_inicial()"
                  required>
             </div>
             <!--------HORA FNAL---------------->
             <div class="col-md-3">
                 Hora final:
                 <input class="form-control" type="datetime-local" name="hr_final" id="id_hr_final" 
-                onblur="valida_data_final()" required>
+                onblur="valida_hora_final()" required>
             </div>
 
         </div>
