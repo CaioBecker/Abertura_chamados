@@ -75,6 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   oci_execute($result_cd_servico);	
   $row_cd_servico = oci_fetch_array($result_cd_servico);
 
+  //VALIDACAO AQUI
+
     echo '</br>CODIGO DO SETOR:'; echo @$row_cd_servico['CD_SERVICO'];
 
   $cd_tp_servico = $row_cd_servico['CD_SERVICO'];  
@@ -94,6 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   //EXECUTANDO A CONSULTA SQL (ORACLE)
   oci_execute($result_nm_usuario);	
+
+  //VALIDACAO AQUI
+  
   $row_nm_usuario = oci_fetch_array($result_nm_usuario);
 
     $var_nome = $row_nm_usuario['NM_USUARIO'];
@@ -251,9 +256,9 @@ $valida_servico = oci_execute($result_tb_serv);
 
 /////////////
   //VALIDACAO
-  if (!$valida_chamado && !$valida_servico) {   
+  if (!$valida_chamado || !$valida_servico) {   
 
-    $erro = oci_error($result_tb_os);																							
+    $erro = oci_error($result_tb_os) . oci_error($consulta_tb_serv) ;																							
     $_SESSION['msgerro'] = htmlentities($erro['message']);
     header('location: registro_chamado.php'); 
     return 0;
