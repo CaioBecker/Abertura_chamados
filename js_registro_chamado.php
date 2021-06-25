@@ -148,6 +148,7 @@
             {
                 document.getElementById('id_hr_final').focus();
             }, 0);
+            return false;
         }
         if(data_fim <= data_pedido && data_fim != ''){
             alert("Data De Encerramento Não Pode Ser Menor Que A Data Pedido");
@@ -155,7 +156,10 @@
             window.setTiemout(function ()
             {
                 document.getElementById('id_data_encerramento').focus();
-            }, 0);    
+            }, 0);
+            return false;    
         }
     }
+
+     
 </script>

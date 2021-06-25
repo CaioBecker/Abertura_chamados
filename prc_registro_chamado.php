@@ -59,6 +59,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>HORA INICIAL:'; echo $var_hr_inicial;
     echo '</br>HORA FINAL:'; echo $var_hr_final;
 
+      /////////////////////////
+     /////DIFERENCA HORA//////
+    /////////////////////////
+    $consulta_diferenca_hora=" SELECT EXTRACT(DAY FROM intervalo) AS DIAS,
+    TO_CHAR( EXTRACT( HOUR FROM intervalo), 'fm00' ) AS HORAS,
+    TO_CHAR( EXTRACT( MINUTE FROM intervalo), 'fm00' ) AS MINUTOS
+    FROM(SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR(,'DD/MM/YYYY HH24:MI:SS'),
+                               var_data_final  => TO_CHAR(SYSDATE,'DD/MM/YYYY HH24:MI:SS')) * 60, 'SECOND') intervalo
+    FROM DUAL)";
+
+    $result_diferenca_hora = ($conn_ora, $consulta_diferenca_hora);
+
+    oci_execute($result_diferenca_hora);
+
+    $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
+
     ////////////////////
    ///CODIGO SERVICO///
   ////////////////////
@@ -77,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   //VALIDACAO AQUI
 
-    echo '</br>CODIGO DO SETOR:'; echo @$row_cd_servico['CD_SERVICO'];
+    echo '</br>CODIGO DO SERVICO:'; echo @$row_cd_servico['CD_SERVICO'];
 
   $cd_tp_servico = $row_cd_servico['CD_SERVICO'];  
    ////////////////////
@@ -104,6 +120,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_nome = $row_nm_usuario['NM_USUARIO'];
     echo '</br>NOME USUARIO:'; echo $var_nome ;
 
+        /////////////////////////
+       ///VALIDA TIPO SERVICO///
+      /////////////////////////
+      $oracle_serv = "SELECT COUNT(*) AS QTD
+      FROM dbamv.MANU_SERV serv
+      WHERE serv.CD_SERVICO = $cd_tp_servico
+      AND SERV.CD_ITEM_RES = 186";
+
+      $res_oracle_serv = oci_parse($conn_ora, $oracle_serv);	
+
+      oci_execute($res_oracle_serv);  
+
+      $row_qtd_serv = oci_fetch_array($res_oracle_serv);
+
+
+
+      ////////////////////////
+     ///VALIDA SOLICITAMTE///
+    ////////////////////////
+      $oracle = "SELECT COUNT(*) AS QTD
+      FROM dbasgu.USUARIOS usu
+      WHERE usu.CD_USUARIO = UPPER('$var_solicitante')";
+
+      $res_oracle = oci_parse($conn_ora, $oracle);	
+
+      oci_execute($res_oracle);  
+
+      $row_qtd = oci_fetch_array($res_oracle);
+
+      $var_qtd = $row_qtd['QTD'];  
+
    ////////////////////
   ///CONSULTA BANCO/// 
  ////////////////////
@@ -128,146 +175,159 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $nextval_serv = oci_execute($result_nextval_serv);
   $row_nextval_serv = oci_fetch_array($result_nextval_serv);
 
-  $var_nextval_serv = $row_nextval_serv['CD_ITSOLICITACAO_OS']; 
+  $var_nextval_serv = $row_nextval_serv['CD_ITSOLICITACAO_OS'];
+  echo  $row_qtd_serv['QTD'];
+  
+  echo $row_qtd['QTD'];
+//////////////////////////////////////////////////////////////////////////////////////////////////
+  if($row_qtd_serv['QTD'] > 0){
+    if($row_qtd['QTD'] > 0){
+        //////////////////
+       ////////OS////////
+      //////////////////
+      $consulta_tb_os = "INSERT INTO dbamv.SOLICITACAO_OS 
+      SELECT $var_nextval AS CD_OS,
+      TO_DATE('$var_data_pedido', 'dd/mm/yy hh24:mi:ss') AS DT_PEDIDO,
+      '$var_descricao' as DS_SERVICO, 
+      '$var_observacao' as DS_OBSERVACAO,
+      TO_DATE('$var_data_encerramento', 'dd/mm/yy hh24:mi:ss') AS DT_EXECUCAO,
+      NULL as DT_PREV_EXEC,
+      '$var_solicitante' as NM_SOLICITANTE,
+      'C' as TP_SITUACAO,
+      '$var_setor' as CD_SETOR, 
+      1 as CD_MULTI_EMPRESA,
+      '$var_especialidade' as CD_ESPEC,
+      29 as CD_TIPO_OS, 
+      '$var_nome' as NM_USUARIO,
+      SYSDATE as DT_ULTIMA_ATUALIZACAO, 
+      '$var_localidade' as CD_LOCALIDADE, 
+      'I' as TP_LOCAL,
+      NULL as CD_BEM,
+      NULL as TP_MOT_CORRET,
+      'S' as SN_SOL_EXTERNA,
+      NULL as CD_FORNECEDOR,
+      '$var_oficina' as CD_OFICINA,
+      'S' as SN_ORDEM_SERVICO_PRINCIPAL,
+      NULL as CD_ORDEM_SERVICO_PRINCIPAL,
+      '$var_motivo_os' as CD_MOT_SERV,
+      NULL as SN_OS_IMPRESSA,
+      NULL DT_HORA_IMPRESSAO,
+      NULL as CD_OS_INTEGRA,
+      NULL as CD_ORDEM_SERVICO_PRINC_INTEGRA,
+      NULL as CD_SEQ_INTEGRA,
+      NULL as DT_INTEGRA,
+      'N' as N_PACIENTE,
+      NULL as CD_LEITO,
+      NULL as CD_MOV_INT,
+      '$var_email' as DS_EMAIL_ALTERNATIVO,
+      '$var_ramal' as DS_RAMAL,
+      NULL as CD_USUARIO_REPROVA_OS,
+      NULL DT_USUARIO_REPROVA_OS,
+      TO_DATE(SYSDATE,'dd/mm/yy') DT_ENTREGA, 
+      'E' as TP_PRIORIDADE,
+      NULL as QT_PRONTUARIOS,
+      'N' as SN_RECEBIDA,
+      UPPER('$var_usuario_responsavel') as CD_RESPONSAVEL,
+      'N' as SN_ETIQUETA_IMPRESSA,
+      'N' as SN_EMAIL_ENVIADO,
+      NULL as CD_PROGRAMACAO_PLANO,
+      'C' as TP_CLASSIFICACAO,
+      NULL as DS_SERVICO_GERAL,
+      NULL as CD_USUARIO_CADASTRO_SOL_SERV,
+      NULL DT_USUARIO_CADASTRO_SOL_SERV,
+      UPPER('$var_usuario_responsavel') as CD_USUARIO_CADASTRO_OS,
+      NULL DT_USUARIO_CADASTRO_OS,
+      NULL as CD_USUARIO_ULTIMA_MODIFICACAO,
+      NULL DT_USUARIO_ULTIMA_MODIFICACAO,
+      '$var_solicitante' as CD_USUARIO_RECEBE_SOL_SERV,
+      NULL DT_USUARIO_RECEBE_SOL_SERV,
+      NULL as CD_USUARIO_FECHA_OS,
+      NULL DT_USUARIO_FECHA_OS,
+      NULL as CD_USUARIO_GERA_OS,
+      NULL DT_USUARIO_GERA_OS,
+      NULL as DS_CONCLUIDO,
+      NULL as CD_PLANO,
+      NULL as DS_JUSTIFICA_CANCELAMENTO,
+      NULL DT_CANCELAMENTO,
+      NULL as CD_USUARIO_CANCELAMENTO,
+      NULL as TP_PRIORIDADE_MODIFIC_NO_RECEB
+      FROM DUAL";
 
+      echo '</br>' . $consulta_tb_os . '</br>';
 
+      $result_tb_os = oci_parse($conn_ora, $consulta_tb_os);							
 
-  //////////////////
- ////////OS////////
-//////////////////
-  $consulta_tb_os = "INSERT INTO dbamv.SOLICITACAO_OS 
-  SELECT $var_nextval AS CD_OS,
-  TO_DATE('$var_data_pedido', 'dd/mm/yy hh24:mi:ss') AS DT_PEDIDO,
-  '$var_descricao' as DS_SERVICO, 
-  '$var_observacao' as DS_OBSERVACAO,
-  TO_DATE('$var_data_encerramento', 'dd/mm/yy hh24:mi:ss') AS DT_EXECUCAO,
-  NULL as DT_PREV_EXEC,
-  '$var_solicitante' as NM_SOLICITANTE,
-  'C' as TP_SITUACAO,
-  '$var_setor' as CD_SETOR, 
-  1 as CD_MULTI_EMPRESA,
-  '$var_especialidade' as CD_ESPEC,
-  29 as CD_TIPO_OS, 
-  '$var_nome' as NM_USUARIO,
-  SYSDATE as DT_ULTIMA_ATUALIZACAO, 
-  '$var_localidade' as CD_LOCALIDADE, 
-  'I' as TP_LOCAL,
-  NULL as CD_BEM,
-  NULL as TP_MOT_CORRET,
-  'S' as SN_SOL_EXTERNA,
-  NULL as CD_FORNECEDOR,
-  '$var_oficina' as CD_OFICINA,
-  'S' as SN_ORDEM_SERVICO_PRINCIPAL,
-  NULL as CD_ORDEM_SERVICO_PRINCIPAL,
-  '$var_motivo_os' as CD_MOT_SERV,
-  NULL as SN_OS_IMPRESSA,
-  NULL DT_HORA_IMPRESSAO,
-  NULL as CD_OS_INTEGRA,
-  NULL as CD_ORDEM_SERVICO_PRINC_INTEGRA,
-  NULL as CD_SEQ_INTEGRA,
-  NULL as DT_INTEGRA,
-  'N' as N_PACIENTE,
-  NULL as CD_LEITO,
-  NULL as CD_MOV_INT,
-  '$var_email' as DS_EMAIL_ALTERNATIVO,
-  '$var_ramal' as DS_RAMAL,
-  NULL as CD_USUARIO_REPROVA_OS,
-  NULL DT_USUARIO_REPROVA_OS,
-  TO_DATE(SYSDATE,'dd/mm/yy') DT_ENTREGA, 
-  'E' as TP_PRIORIDADE,
-  NULL as QT_PRONTUARIOS,
-  'N' as SN_RECEBIDA,
-  UPPER('$var_usuario_responsavel') as CD_RESPONSAVEL,
-  'N' as SN_ETIQUETA_IMPRESSA,
-  'N' as SN_EMAIL_ENVIADO,
-  NULL as CD_PROGRAMACAO_PLANO,
-  'C' as TP_CLASSIFICACAO,
-  NULL as DS_SERVICO_GERAL,
-  NULL as CD_USUARIO_CADASTRO_SOL_SERV,
-  NULL DT_USUARIO_CADASTRO_SOL_SERV,
-  UPPER('$var_usuario_responsavel') as CD_USUARIO_CADASTRO_OS,
-  NULL DT_USUARIO_CADASTRO_OS,
-  NULL as CD_USUARIO_ULTIMA_MODIFICACAO,
-  NULL DT_USUARIO_ULTIMA_MODIFICACAO,
-  '$var_solicitante' as CD_USUARIO_RECEBE_SOL_SERV,
-  NULL DT_USUARIO_RECEBE_SOL_SERV,
-  NULL as CD_USUARIO_FECHA_OS,
-  NULL DT_USUARIO_FECHA_OS,
-  NULL as CD_USUARIO_GERA_OS,
-  NULL DT_USUARIO_GERA_OS,
-  NULL as DS_CONCLUIDO,
-  NULL as CD_PLANO,
-  NULL as DS_JUSTIFICA_CANCELAMENTO,
-  NULL DT_CANCELAMENTO,
-  NULL as CD_USUARIO_CANCELAMENTO,
-  NULL as TP_PRIORIDADE_MODIFIC_NO_RECEB
-  FROM DUAL";
+      //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+      
+      $valida_chamado = oci_execute($result_tb_os);
 
-  echo '</br>' . $consulta_tb_os . '</br>';
+      //$var_total_hora = $var_hr_final - $var_hr_inicial;
 
-  $result_tb_os = oci_parse($conn_ora, $consulta_tb_os);							
+      /////////////////////////
+      /////////Serviço/////////
+      /////////////////////////
 
-  //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
-   
-  $valida_chamado = oci_execute($result_tb_os);
+      $consulta_tb_serv="INSERT INTO itsolicitacao_os
+      SELECT
+      $var_nextval_serv AS CD_ITSOLICITACAO_OS,
+      TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
+      TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
+      NULL AS VL_TEMPO_GASTO,
+      $var_nextval AS CD_OS,
+      $var_cd_func AS CD_FUNC,
+      $cd_tp_servico AS CD_SERVICO,
+      NULL AS VL_TEMPO_GASTO_MIN,
+      NULL AS DS_SERVICO,
+      'S' AS SN_CHECK_LIST,
+      NULL AS VL_REAL,
+      NULL AS CD_BEM,
+      NULL AS VL_REFERENCIA,
+      NULL AS CD_LEITURA,
+      NULL AS VL_HORA,
+      NULL AS VL_HORA_EXTRA,
+      NULL AS VL_EXTRA,
+      NULL AS VL_EXTRA_MIN,
+      NULL AS DS_FUNCIONARIO,
+      NULL AS CD_ITSOLICITACAO_OS_INTEGRA,
+      NULL AS CD_SEQ_INTEGRA,
+      NULL AS DT_INTEGRA,
+      NULL AS CD_ITSOLICITACAO_OS_FILHA,
+      NULL AS CD_TIPO_PROCEDIMENTO_PLANO  
+      FROM DUAL
+      ";
+      echo "--------------------------------------------------------------------------------------------------</br>";
+      echo $consulta_tb_serv;
 
-  //$var_total_hora = $var_hr_final - $var_hr_inicial;
+      $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
 
-  /////////////////////////
- /////////Serviço/////////
-/////////////////////////
+      //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
+      
+      $valida_servico = oci_execute($result_tb_serv);
 
-$consulta_tb_serv="INSERT INTO itsolicitacao_os
-SELECT
-$var_nextval_serv AS CD_ITSOLICITACAO_OS,
-TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
-TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
-NULL AS VL_TEMPO_GASTO,
-$var_nextval AS CD_OS,
-$var_cd_func AS CD_FUNC,
-$cd_tp_servico AS CD_SERVICO,
-NULL AS VL_TEMPO_GASTO_MIN,
-NULL AS DS_SERVICO,
-'S' AS SN_CHECK_LIST,
-NULL AS VL_REAL,
-NULL AS CD_BEM,
-NULL AS VL_REFERENCIA,
-NULL AS CD_LEITURA,
-NULL AS VL_HORA,
-NULL AS VL_HORA_EXTRA,
-NULL AS VL_EXTRA,
-NULL AS VL_EXTRA_MIN,
-NULL AS DS_FUNCIONARIO,
-NULL AS CD_ITSOLICITACAO_OS_INTEGRA,
-NULL AS CD_SEQ_INTEGRA,
-NULL AS DT_INTEGRA,
-NULL AS CD_ITSOLICITACAO_OS_FILHA,
-NULL AS CD_TIPO_PROCEDIMENTO_PLANO  
-FROM DUAL
-";
-echo "--------------------------------------------------------------------------------------------------</br>";
-echo $consulta_tb_serv;
+      /////////////
+        //VALIDACAO
+        if (!$valida_chamado || !$valida_servico) {   
 
-$result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
+          $erro = oci_error($result_tb_os) . oci_error($consulta_tb_serv) ;																							
+          $_SESSION['msgerro'] = htmlentities($erro['message']);
+          header('location: registro_chamado.php'); 
+          return 0;
 
-//EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
- 
-$valida_servico = oci_execute($result_tb_serv);
+        }else {
 
-/////////////
-  //VALIDACAO
-  if (!$valida_chamado || !$valida_servico) {   
+          $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
+          header('location: home.php'); 
 
-    $erro = oci_error($result_tb_os) . oci_error($consulta_tb_serv) ;																							
-    $_SESSION['msgerro'] = htmlentities($erro['message']);
+        }
+    }else{
+      $_SESSION['msgerro'] = 'Usuario do solicitante invalido';
+      header('location: registro_chamado.php'); 
+      return 0;
+    }
+  }else{
+    $_SESSION['msgerro'] =  $row_qtd_serv['QTD'] . 'Tipo de serviço invalido';
     header('location: registro_chamado.php'); 
     return 0;
-
-  }else {
-
-    $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-    header('location: home.php'); 
-
   }
 }
 ?>

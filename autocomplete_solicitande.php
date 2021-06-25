@@ -40,7 +40,7 @@
    
     <div class="input-group col-12" style="padding: 0 !important;">
     <input id="input_valor" name="input_valor" type="text" class="form-control" 
-        placeholder="<?php echo $placeholder_botao;   ?>" onkeypress="return ApenasLetras(event,this)"  required>
+        placeholder="<?php echo $placeholder_botao;   ?>" onkeypress="return ApenasLetras(event,this)" required>
     </div>
 
 <!--</form>-->

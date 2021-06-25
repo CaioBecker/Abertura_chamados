@@ -128,7 +128,7 @@
 
                     <?php
                         //AUTOCOMPLETE
-                        include 'autocomplete.php';
+                        include 'autocomplete_solicitande.php';
 
                     ?>
                                     
@@ -327,5 +327,5 @@
 
 
 <?php
-    include 'validacao_date.php';
+    include 'js_registro_chamado.php';
 ?>
