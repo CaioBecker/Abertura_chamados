@@ -50,13 +50,13 @@
         </br>
         </br>
         <!--TITULO-->
-        <h11><i class="fa fa-cogs" aria-hidden="true"></i> Administrativo</h11>
-        
+        <!--<h11><i class="fa fa-cogs" aria-hidden="true"></i> Administrativo</h11>
+        -->
         <div class="div_br"> </div>
 
         <!--BOTOES ADM-->
-        <a href="#" class="botao_home_adm" type="submit"><h21><i class="fa fa-question-circle-o" aria-hidden="true"></i> Botão 1 </h21></a></td></tr>
-
+        <!--<a href="#" class="botao_home_adm" type="submit"><h21><i class="fa fa-question-circle-o" aria-hidden="true"></i> Botão 1 </h21></a></td></tr>
+        -->
         </br>
         </br>
 
