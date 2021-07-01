@@ -63,36 +63,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      /////DIFERENCA HORA//////
     /////////////////////////
     $consulta_diferenca_hora="SELECT
-                              Y.DIAS
-                              ,Y.HORAS
-                              ,(CASE WHEN LENGTH(Y.MINU)<2 THEN '0'||Y.MINU
-                                ELSE TO_CHAR(Y.MINU) END)MINU2
-                              FROM
-                              (SELECT
-                              X.DIAS
-                              ,X.HORAS
-                              --,X.MINUTOS
-                              ,(CASE WHEN (X.FIM - X.INI) !=0
-                                    THEN (X.FIM - X.INI)
-                                    WHEN (X.FIM - X.INI) = 0
-                                    THEN 0
-                                            
-                                    END)MINU
-                              FROM
-                              
-                              (SELECT EXTRACT(DAY FROM intervalo) AS DIAS,
-                                    TO_CHAR(EXTRACT(HOUR FROM intervalo), 'fm00') AS HORAS,
-                                    TO_CHAR(EXTRACT(MINUTE FROM intervalo), 'fm00') AS MINUTOS,
-                                   TO_CHAR('$var_hr_inicial','DD/MM/YYYY HH24:MI:SS'),'MI')INI,
-                                    TO_CHAR('$var_hr_final', 'DD/MM/YYYY HH24:MI:SS'),'MI')FIM
-                                FROM 
+                                Y.DIAS
+                                ,Y.HORAS
+                                ,(CASE WHEN LENGTH(Y.MINU)<2 THEN '0'||Y.MINU
+                                  ELSE TO_CHAR(Y.MINU) END)MINU2
+                                FROM
+                                (SELECT
+                                X.DIAS
+                                ,X.HORAS
+                                --,X.MINUTOS
+                                ,(CASE WHEN (X.FIM - X.INI) !=0
+                                      THEN (X.FIM - X.INI)
+                                      WHEN (X.FIM - X.INI) = 0
+                                      THEN 0
+                                              
+                                      END)MINU
+                                FROM
                                 
-                                
-                                (SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR('$var_hr_inicial','DD/MM/YYYY HH24:MI:SS')
-                                ,var_data_final => TO_CHAR('$var_hr_final', 'DD/MM/YYYY HH24:MI:SS')
-                                                                                         ) * 60,
-                                                                                          'SECOND') intervalo
-                                FROM DUAL))X)Y  ";
+                                (SELECT EXTRACT(DAY FROM intervalo) AS DIAS,
+                                      TO_CHAR(EXTRACT(HOUR FROM intervalo), 'fm00') AS HORAS,
+                                      TO_CHAR(EXTRACT(MINUTE FROM intervalo), 'fm00') AS MINUTOS,
+                                    TO_CHAR('01/06/2021 15:02:00','DD/MM/YYYY HH24:MI:SS','MI')INI,
+                                      TO_CHAR('05/06/2021 14:30:00', 'DD/MM/YYYY HH24:MI:SS','MI')FIM
+                                  FROM 
+                                  
+                                  
+                                  (SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR('01/06/2021 15:02:00','DD/MM/YYYY HH24:MI:SS')
+                                  ,var_data_final => TO_CHAR('05/06/2021 14:30:00', 'DD/MM/YYYY HH24:MI:SS')
+                                                                                          ) * 60,
+                                                                                            'SECOND') intervalo
+                                  FROM DUAL))X)Y";
 
     $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
