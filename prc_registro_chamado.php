@@ -83,17 +83,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                               (SELECT EXTRACT(DAY FROM intervalo) AS DIAS,
                                     TO_CHAR(EXTRACT(HOUR FROM intervalo), 'fm00') AS HORAS,
                                     TO_CHAR(EXTRACT(MINUTE FROM intervalo), 'fm00') AS MINUTOS,
-                                   TO_CHAR(TO_DATE('$var_hr_inicial','DD-MM-YYYY HH24:MI:SS'),'MI')INI,
-                                    TO_CHAR(TO_DATE('$var_hr_final', 'DD-MM-YYYY HH24:MI:SS'),'MI')FIM
+                                   TO_CHAR('$var_hr_inicial','DD/MM/YYYY HH24:MI:SS'),'MI')INI,
+                                    TO_CHAR('$var_hr_final', 'DD/MM/YYYY HH24:MI:SS'),'MI')FIM
                                 FROM 
                                 
                                 
-                                (SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR(TO_DATE('$var_hr_inicial','DD-MM-YYYY HH24:MI:SS'),'DD-MM-YYYY HH24:MI:SS')
-                                ,var_data_final => TO_CHAR(TO_DATE('$var_hr_final', 'DD-MM-YYYY HH24:MI:SS'),'DD-MM-YYYY HH24:MI:SS')
+                                (SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR('$var_hr_inicial','DD/MM/YYYY HH24:MI:SS')
+                                ,var_data_final => TO_CHAR('$var_hr_final', 'DD/MM/YYYY HH24:MI:SS')
                                                                                          ) * 60,
                                                                                           'SECOND') intervalo
-                                FROM DUAL))X)Y
-                                ";
+                                FROM DUAL))X)Y  ";
 
     $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
@@ -296,6 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /////////////////////////
       /////////Serviço/////////
       /////////////////////////
+
 
       $consulta_tb_serv = "INSERT INTO itsolicitacao_os
                             SELECT $var_nextval_serv AS CD_ITSOLICITACAO_OS,
