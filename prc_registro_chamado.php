@@ -327,7 +327,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       //echo "</br>".$consulta_tb_serv."</br>";
       $teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
       $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
-      //echo $teste;
+      echo $teste;
       //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
       
       $valida_servico = oci_execute($result_tb_serv);
@@ -341,7 +341,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          header('location: home.php'); 
+          //header('location: home.php'); 
           //return 0;
         }
     }else{
