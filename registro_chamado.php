@@ -17,9 +17,9 @@
 
  <!--MENSAGENS-->
  <?php
-        include 'js/mensagens.php';
-        include 'js/mensagens_usuario.php';
-?>
+            include 'js/mensagens.php';
+            include 'js/mensagens_usuario.php';
+        ?>
 
 <form method="post" action="prc_registro_chamado.php">
     <div class="div_br"></div>
@@ -215,7 +215,12 @@
                 <input class="form-control" type="datetime-local" name="hr_final" id="id_hr_final" 
                 onblur="valida_hora_final()" required>
             </div>
-
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                Descrição detalhada:
+                <input type="text" class="form-control" name="ds_detalhada">
+            </div>
         </div>
     <!------------------------CONFIGURAÇÃO PADRÃO-------------------------------------------------------------->
     <div class="div_br"></div>

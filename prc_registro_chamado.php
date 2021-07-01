@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_cd_servico = $_POST['input_valor_servico'];
     $var_hr_inicial =  date('d/m/Y H:i:s', strtotime($_POST['hr_inicial']));
     $var_hr_final =  date('d/m/Y H:i:s', strtotime($_POST['hr_final']));
+    $var_ds_detalhada = $_POST['ds_detalhada'];
 
 
 
@@ -58,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>TIPO DO SERVIÇO:' . $var_cd_servico;
     echo '</br>HORA INICIAL:' . $var_hr_inicial;
     echo '</br>HORA FINAL:' . $var_hr_final;
-
+    echo '</br>DESCRIÇÃO DETALHADA:' . $var_ds_detalhada;
+ 
       /////////////////////////
      /////DIFERENCA HORA//////
     /////////////////////////
@@ -94,16 +96,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                                             'SECOND') intervalo
                                   FROM DUAL))X)Y";
 
-    $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
+    //$result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
-    oci_execute($result_diferenca_hora);
+    //oci_execute($result_diferenca_hora);
 
-    $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
-    echo '-----------------------------------------------------------------------';
-    echo '</br>TOTAL HORAS:'; echo $row_diferenca_hora['intervalo'];
+   // $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
+    //echo '-----------------------------------------------------------------------';
+    //echo '</br>TOTAL HORAS:'; echo $row_diferenca_hora['intervalo'];
     //echo $consulta_diferenca_hora;
     //echo '</br>-----------------------------------------------------------------------';
-    $var_resultado = $row_diferenca_hora['intervalo'];
+   // $var_resultado = $row_diferenca_hora['intervalo'];
     
 
     ////////////////////
@@ -301,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             SELECT $var_nextval_serv AS CD_ITSOLICITACAO_OS,
                             TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
                             TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
-                            TO_CHAR('$var_resultado', 'hh24:mi:ss') AS VL_TEMPO_GASTO,
+                            NULL AS VL_TEMPO_GASTO,
                             $var_nextval AS CD_OS,
                             $var_cd_func AS CD_FUNC,
                             $cd_tp_servico AS CD_SERVICO,
@@ -322,26 +324,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             NULL AS DT_INTEGRA,
                             NULL AS CD_ITSOLICITACAO_OS_FILHA,
                             NULL AS CD_TIPO_PROCEDIMENTO_PLANO  
-                            FROM DUAL";
+                            FROM DUAL
+                            ";
                             
       //echo "</br>".$consulta_tb_serv."</br>";
       $teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
       $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
-      echo $teste;
+      //echo $teste;
       //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
       
       $valida_servico = oci_execute($result_tb_serv);
 
+      $update_ds = "UPDATE itsolicitacao_os os
+                    SET os.ds_servico = '$var_ds_detalhada'
+                    WHERE  os.CD_ITSOLICITACAO_OS = $var_nextval_serv
+                    ";
+
+      $result_ds = oci_parse($conn_ora, $update_ds);
+      $valida_ds = oci_execute($result_ds);
       /////////////
         //VALIDACAO
         if (!$valida_chamado || !$valida_servico) {   
-          $erro = oci_error($result_tb_os) . oci_error($consulta_tb_serv) ;																							
+          $erro = oci_error($result_tb_os) . oci_error($result_tb_os) ;																							
           $_SESSION['msgerro'] = htmlentities($erro['message']);
-          header('location: registro_chamado.php'); 
+          //header('location: registro_chamado.php'); 
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          //header('location: home.php'); 
+          header('location: home.php'); 
           //return 0;
         }
     }else{
