@@ -64,49 +64,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /////////////////////////
      /////DIFERENCA HORA//////
     /////////////////////////
-    $consulta_diferenca_hora="SELECT
-                                Y.DIAS
-                                ,Y.HORAS
-                                ,(CASE WHEN LENGTH(Y.MINU)<2 THEN '0'||Y.MINU
-                                  ELSE TO_CHAR(Y.MINU) END)MINU2
-                                FROM
-                                (SELECT
-                                X.DIAS
-                                ,X.HORAS
-                                --,X.MINUTOS
-                                ,(CASE WHEN (X.FIM - X.INI) !=0
-                                      THEN (X.FIM - X.INI)
-                                      WHEN (X.FIM - X.INI) = 0
-                                      THEN 0
-                                              
-                                      END)MINU
-                                FROM
-                                
-                                (SELECT EXTRACT(DAY FROM intervalo) AS DIAS,
-                                      TO_CHAR(EXTRACT(HOUR FROM intervalo), 'fm00') AS HORAS,
-                                      TO_CHAR(EXTRACT(MINUTE FROM intervalo), 'fm00') AS MINUTOS,
-                                    TO_CHAR('01/06/2021 15:02:00','DD/MM/YYYY HH24:MI:SS','MI')INI,
-                                      TO_CHAR('05/06/2021 14:30:00', 'DD/MM/YYYY HH24:MI:SS','MI')FIM
-                                  FROM 
-                                  
-                                  
-                                  (SELECT NUMTODSINTERVAL(FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => TO_CHAR('01/06/2021 15:02:00','DD/MM/YYYY HH24:MI:SS')
-                                  ,var_data_final => TO_CHAR('05/06/2021 14:30:00', 'DD/MM/YYYY HH24:MI:SS')
-                                                                                          ) * 60,
-                                                                                            'SECOND') intervalo
-                                  FROM DUAL))X)Y";
+    $consulta_diferenca_hora=" SELECT ROUND(TRUNC(24* MOD(TO_DATE('$var_hr_final','dd/mm/yyyy hh24:mi:ss') - TO_DATE('$var_hr_inicial','dd/mm/yyyy hh24:mi:ss'),1)),0) as HORAS,
+    ROUND((MOD(MOD(TO_DATE('$var_hr_final','dd/mm/yyyy hh24:mi:ss')  - TO_DATE('$var_hr_inicial','dd/mm/yyyy hh24:mi:ss'),1)*24,1)*60),0) as MINUTOS FROM dual";
 
-    //$result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
+    $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
-    //oci_execute($result_diferenca_hora);
+    oci_execute($result_diferenca_hora);
 
-   // $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
-    //echo '-----------------------------------------------------------------------';
-    //echo '</br>TOTAL HORAS:'; echo $row_diferenca_hora['intervalo'];
-    //echo $consulta_diferenca_hora;
-    //echo '</br>-----------------------------------------------------------------------';
-   // $var_resultado = $row_diferenca_hora['intervalo'];
-    
+    $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
+    echo '</br>-----------------------------------------------------------------------';
+    echo '</br>TOTAL HORAS:'; echo $row_diferenca_hora['HORAS'];
+    echo '</br>TOTAL MINUTOS:'; echo $row_diferenca_hora['MINUTOS'];
+    echo '</br>'; echo $consulta_diferenca_hora;
+    echo '</br>-----------------------------------------------------------------------';
+    $var_resultado_hora = $row_diferenca_hora['HORAS'];
+    $var_resultado_minutos = $row_diferenca_hora['MINUTOS'];    
 
     ////////////////////
    ///CODIGO SERVICO///
@@ -303,11 +275,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             SELECT $var_nextval_serv AS CD_ITSOLICITACAO_OS,
                             TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
                             TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
-                            NULL AS VL_TEMPO_GASTO,
+                            $var_resultado_hora AS VL_TEMPO_GASTO,
                             $var_nextval AS CD_OS,
                             $var_cd_func AS CD_FUNC,
                             $cd_tp_servico AS CD_SERVICO,
-                            NULL AS VL_TEMPO_GASTO_MIN,
+                            $var_resultado_minutos AS VL_TEMPO_GASTO_MIN,
                             NULL AS DS_SERVICO,
                             'S' AS SN_CHECK_LIST,
                             NULL AS VL_REAL,

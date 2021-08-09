@@ -48,7 +48,8 @@ oci_execute($result_especialidade);
 //LOCALIDADE
 $consulta_localidade =
 "SELECT L.CD_LOCALIDADE, L.DS_LOCALIDADE
-FROM DBAMV.LOCALIDADE L";
+FROM DBAMV.LOCALIDADE L
+ORDER BY L.DS_LOCALIDADE ASC";
 
 $result_localidade = oci_parse($conn_ora, $consulta_localidade);
 
@@ -58,7 +59,8 @@ oci_execute($result_localidade);
 //TIPO DA OS
 $consulta_tipo_os =
 "SELECT TIO.CD_TIPO_OS, TIO.DS_TIPO_OS
-FROM DBAMV.TIPO_OS TIO";
+FROM DBAMV.TIPO_OS TIO
+ORDER BY TIO.DS_TIPO_OS ASC ";
 
 $result_tipo_os = oci_parse($conn_ora, $consulta_tipo_os);
 
@@ -68,7 +70,8 @@ oci_execute($result_tipo_os);
 //MOTIVO DO SERVIÇO
 $consulta_mot_serv =
 "SELECT MOS.CD_MOT_SERV, MOS.DS_MOT_SERV
-FROM DBAMV.MOT_SERV MOS";
+FROM DBAMV.MOT_SERV MOS
+ORDER BY MOS.DS_MOT_SERV ASC";
 
 $result_mot_serv = oci_parse($conn_ora, $consulta_mot_serv);
 
@@ -78,7 +81,8 @@ oci_execute($result_mot_serv);
 //OFICINA
 $consulta_oficina =
 "SELECT OFI.CD_OFICINA, OFI.DS_OFICINA, OFI.DS_EMAIL
-FROM DBAMV.OFICINA OFI";
+FROM DBAMV.OFICINA OFI
+ORDER BY OFI.DS_OFICINA ASC";
 
 $result_oficina = oci_parse($conn_ora, $consulta_oficina);
 

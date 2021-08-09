@@ -45,7 +45,8 @@
             window.setTimeout(function ()
             {
                 document.getElementById('id_hr_final').focus();
-            }, 0);    
+            }, 0);
+            return false;    
         }
 
         if(hr_final <= data_pedido && data_pedido != ''){
@@ -55,6 +56,7 @@
             {
                 document.getElementById('id_hr_final').focus();
             }, 0);
+            return false;
         }
 
         if(data_fim <= hr_final && data_fim != ''){
@@ -63,7 +65,8 @@
             window.setTimeout(function ()
             {
                 document.getElementById('id_hr_final').focus();
-            }, 0);    
+            }, 0);
+            return false;    
         }
     }
      /////////////////////////////

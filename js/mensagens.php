@@ -10,7 +10,7 @@
         <?php
         // MENSAGEM ERRO USUARIO
                         
-        if(isset($_SESSION['msgerro']) AND !empty($_SESSION['msgerro'])){
+        if(isset($_SESSION['msgerro'])){
             
             echo "<div class='div_br'>";
             echo "</div>";
@@ -40,7 +40,7 @@
 
         <?php
         // MENSAGEM SUCESSO
-        if(isset($_SESSION['msg']) AND !empty($_SESSION['msg'])){
+        if(isset($_SESSION['msg'])){
             
 
             echo "<div class='div_br'>";
@@ -70,7 +70,7 @@
 <?php
         // MENSAGEM NEUTRA
                         
-        if(isset($_SESSION['msgneutra']) AND !empty($_SESSION['msgneutra'])){
+        if(isset($_SESSION['msgneutra'])){
             
             echo "<div class='div_br'>";
             echo "</div>";

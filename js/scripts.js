@@ -32,3 +32,8 @@ $(document).ready(function(){
         placement : 'top'
     });
 });
+
+///////////////////////////////////
+//VERIFICA SE O USUARIO E VALIDO//
+/////////////////////////////////
+
