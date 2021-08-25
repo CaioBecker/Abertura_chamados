@@ -64,9 +64,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /////////////////////////
      /////DIFERENCA HORA//////
     /////////////////////////
-    $consulta_diferenca_hora=" SELECT ROUND(TRUNC(24* MOD(TO_DATE('$var_hr_final','dd/mm/yyyy hh24:mi:ss') - TO_DATE('$var_hr_inicial','dd/mm/yyyy hh24:mi:ss'),1)),0) as HORAS,
-    ROUND((MOD(MOD(TO_DATE('$var_hr_final','dd/mm/yyyy hh24:mi:ss')  - TO_DATE('$var_hr_inicial','dd/mm/yyyy hh24:mi:ss'),1)*24,1)*60),0) as MINUTOS FROM dual";
-
+    $consulta_diferenca_hora="SELECT 
+    ROUND((minutos_totais / 60),0) AS HORAS,
+    ROUND((((minutos_totais / 60) - ROUND((minutos_totais / 60),0)) * 60),0) AS MINUTOS,
+    '00' AS SEGUNDOS
+    FROM (SELECT FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => '" . $var_hr_inicial . "',
+                                              var_data_final  => '" . $var_hr_final . "') AS minutos_totais
+          FROM DUAL) intervalo
+    
+    
+    
+    ";
+    echo '</br> consulta horas: </br>'. $consulta_diferenca_hora;
     $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
     oci_execute($result_diferenca_hora);
@@ -323,17 +332,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          header('location: home.php'); 
+          //header('location: home.php'); 
           //return 0;
         }
     }else{
       $_SESSION['msgerro'] = 'Usuario do solicitante invalido';
-      header('location: registro_chamado.php'); 
+      //header('location: registro_chamado.php'); 
       return 0;
     }
   }else{
     $_SESSION['msgerro'] =  'Tipo de serviço invalido';
-    header('location: registro_chamado.php'); 
+    //header('location: registro_chamado.php'); 
     return 0;
   }
 }

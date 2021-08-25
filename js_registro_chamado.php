@@ -8,8 +8,9 @@
         var hr_final = document.getElementById('id_hr_final').value;
         var data_pedido = document.getElementById('id_data_pedido').value;
         var data_fim = document.getElementById('id_data_encerramento').value;
+      
 
-        if(data_fim <= data_pedido && data_pedido != ''){
+        if(data_fim < data_pedido && data_pedido != ''){
             alert("Data De Encerramento Não Pode Ser Menor Que A Data Pedido");
             document.getElementById('id_data_encerramento').value= "";
             window.setTiemout(function ()
@@ -20,14 +21,23 @@
             
         }
 
-          if(data_fim <= hr_inicial && hr_inicial != ''){    
+        if(data_fim <= hr_inicial && hr_inicial != ''){    
             alert("A Data De Encerramento Não Pode Ser Menor Que A Data Inicial");   
             document.getElementById('id_data_encerramento').value = "";
             window.setTimeout(function ()
             {
                 document.getElementById('id_data_encerramento').focus();
             }, 0)       
-        }   
+        }  
+        if(data_fim.substring(0, 10) != data_pedido.substring(0, 10) && data_pedido != '' && data_pedido.substring(11,19) != data_fim.substring(11,19)){
+            alert("O DIA Da DATA De Encerramento Não Pode Ser Diferente Do DIA Da DATA Inicial");   
+            document.getElementById('id_data_encerramento').value = "";
+            window.setTimeout(function ()
+            {
+                document.getElementById('id_data_encerramento').focus();
+            }, 0) 
+            
+        } 
     }
      /////////////////////////////
     //////////HORA FINAL/////////
