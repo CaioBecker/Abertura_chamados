@@ -21,7 +21,7 @@
             include 'js/mensagens_usuario.php';
         ?>
 
-<form method="post" action="prc_registro_chamado.php">
+<form autocomplete="off" method="post" action="prc_registro_chamado.php">
     <div class="div_br"></div>
     <div class="div_br"></div>
     <!-------------------CHAMADOS------------------------------------------->
@@ -77,7 +77,7 @@
             <!--------FUNCIONARIO RESPONSAVEL-->
             <div class="col-md-3">
                 Funcionario Responsavel:
-                <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo strtoupper(@$_SESSION['usuarioLogin2']);?>" disabled>
+                <input class="form-control" type="text" name="cd_responsavel" id="id_cd_responsavel" value="<?php echo strtoupper(@$_SESSION['usuarioLogin']);?>" disabled>
             </div>
 
             <div class="col-md-3">
@@ -237,7 +237,7 @@
             <!--USUARIO-->
             <div class="form-group col-md-4">
                 <label>Usuário</label>
-                <input type="text" value="<?php echo strtoupper(@$_SESSION['usuarioLogin2']);?>" class="form-control" name="frm_usuario" readonly>
+                <input type="text" value="<?php echo strtoupper(@$_SESSION['usuarioLogin']);?>" class="form-control" name="frm_usuario" readonly>
             </div>
 
             <div class="form-group col-md-3">

@@ -1,9 +1,6 @@
 <?php
 
-$dataIni = date('Y/m/d H:i:s', strtotime($var_hr_inicial));
-echo '</br>'.$dataIni;
-$dataFim = date('Y/m/d H:i:s', strtotime($var_hr_final));
-echo '</br>'.$dataFim;
+
 
 
 $datatime1 = new DateTime($dataIni);
@@ -18,8 +15,8 @@ foreach ($periodo as $data) {
 
         $inicioDoPrimeiroTurno = clone $dataEmMinuto->setTime(7, 30, 0);
         $fimDoPrimeiroTurno = clone $dataEmMinuto->setTime(12, 0, 0);
-        $inicioDoSegundoTurno = clone $dataEmMinuto->setTime(13, 30, 0);
-        $fimDoSegundoTurno = clone $dataEmMinuto->setTime(17, 48, 0);
+        $inicioDoSegundoTurno = clone $dataEmMinuto->setTime(13, 0, 0);
+        $fimDoSegundoTurno = clone $dataEmMinuto->setTime(18, 0, 0);
 
         if (($inicioDoPrimeiroTurno < $data && $data < $fimDoPrimeiroTurno) || ($inicioDoSegundoTurno < $data && $data < $fimDoSegundoTurno)) {
                 $minutos++;

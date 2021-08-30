@@ -10,7 +10,10 @@
     include 'cabecalho.php';
 
     //ACESSO RESTRITO
-    //include 'acesso_restrito.php';
+    include 'acesso_restrito.php';
+
+    //sql config padrao
+    include 'config_padrao_usuario_sql.php';
 
 ?>
 
@@ -46,7 +49,12 @@
         <!--BOTOES-->
         <a href="config_padrao.php" class="botao_home" type="submit"><h21><i class="fas fa-cog"></i> Configuração padrão </h21></a></td></tr>
 		<span class="espaco_pequeno"></span>
+        <?php if($row_email_usuario != '' || $row_email_usuario != null){ ?>
         <a href="registro_chamado.php" class="botao_home" type="submit"><h21><i class="fas fa-edit"></i> Registro chamado </h21></a></td></tr>
+        <?php }else{ ?>
+            <i class="fas fa-arrow-left"></i>
+            <?php echo 'Preencha a config padrão';
+        }; ?>
         </br>
         </br>
         <!--TITULO-->

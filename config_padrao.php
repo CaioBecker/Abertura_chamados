@@ -27,14 +27,14 @@
         <div class="div_br"> </div>
         <div class="div_br"> </div>    
         
-        <form method="post" action="prc_config_padrao.php">
+        <form autocomplete="off" method="post" action="prc_config_padrao.php">
             <!--PRIMEIRA LINHA-->
             <div class="form-row">
 
                 <!--USUARIO-->
                 <div class="form-group col-md-4">
                     <label>Usuário</label>
-                    <input type="text" value="<?php echo $var_cd_func = strtoupper(@$_SESSION['usuarioLogin2']);?>" class="form-control" name="frm_usuario" disabled>
+                    <input type="text" value="<?php echo $var_cd_func = strtoupper(@$_SESSION['usuarioLogin']);?>" class="form-control" name="frm_usuario" disabled>
                 </div>
 
                  <div class="form-group col-md-4">

@@ -9,7 +9,7 @@
     ob_start();
 
     //VARIAVEIS NOME
-    @$nome = @$_SESSION['usuarioLogin2'];
+    @$nome = @$_SESSION['usuarioNome'];
     @$pri_nome = substr(@$nome, 0, strpos(@$nome, ' '));
 
     //ACESSO RESTRITO

@@ -9,7 +9,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS 
-    $var_usuario = $_SESSION['usuarioLogin2'];
+    $var_usuario = $_SESSION['usuarioLogin'];
     $var_cd_func = $_POST['frm_cd_func'];
     $var_nm_func = $_POST['frm_nm_func'];
     $var_setor = $_POST['frm_setor'];

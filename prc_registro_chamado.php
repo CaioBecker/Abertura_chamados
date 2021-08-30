@@ -9,7 +9,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //RECEBEDO VARIAVEIS PADRAO
-    $var_usuario = $_SESSION['usuarioLogin2'];
+    $var_usuario = $_SESSION['usuarioLogin'];
     $var_cd_func = $_POST['frm_cd_func'];
     $var_nm_func = $_POST['frm_nm_func']; 
     $var_setor =  $_POST['frm_setor'];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_descricao = $_POST['ds_servico'];
     $var_data_pedido =  date('d/m/Y H:i:s', strtotime($_POST['dt_pedido']));
     $var_data_encerramento =  date('d/m/Y H:i:s', strtotime($_POST['dt_encerramento']));
-    $var_usuario_responsavel = $_SESSION['usuarioLogin2'];
+    $var_usuario_responsavel = $_SESSION['usuarioLogin'];
     $var_solicitante = $_POST['input_valor'];
     $var_observacao = $_POST['ds_observacao'];
     $var_cd_servico = $_POST['input_valor_servico'];
@@ -64,7 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /////////////////////////
      /////DIFERENCA HORA//////
     /////////////////////////
-
+    $dataIni = date('Y/m/d H:i:s', strtotime($_POST['hr_inicial']));
+    echo '</br>'.$dataIni;
+    $dataFim = date('Y/m/d H:i:s', strtotime($_POST['hr_final']));
+    echo '</br>'.$dataFim;
       include 'calculo_horas.php';
 
  

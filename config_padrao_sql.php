@@ -38,7 +38,7 @@ oci_execute($result_setor);
 $consulta_especialidade =
 "SELECT me.CD_ESPEC, me.DS_ESPEC
 FROM MANU_ESPEC me
-ORDER BY me.CD_ESPEC ASC";
+ORDER BY me.DS_ESPEC ASC";
 
 $result_especialidade = oci_parse($conn_ora, $consulta_especialidade);
 

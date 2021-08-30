@@ -1,6 +1,6 @@
 <?php
 
-$var_USUARIO = $_SESSION['usuarioLogin2'];
+$var_USUARIO = $_SESSION['usuarioLogin'];
 
 /////////////////////
 //CODIGO FUNSUARIO//
