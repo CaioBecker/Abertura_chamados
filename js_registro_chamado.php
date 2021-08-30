@@ -29,8 +29,8 @@
                 document.getElementById('id_data_encerramento').focus();
             }, 0)       
         }  
-        if(data_fim.substring(0, 10) != data_pedido.substring(0, 10) && data_pedido != '' && data_pedido.substring(11,19) != data_fim.substring(11,19)){
-            alert("O DIA Da DATA De Encerramento Não Pode Ser Diferente Do DIA Da DATA Inicial");   
+        if(data_fim.substring(0, 10) != data_pedido.substring(0, 10) && data_pedido != '' && data_pedido.substring(11,19) == data_fim.substring(11,19)){
+            alert("O DIA Da DATA De Encerramento Não Pode Ser Diferente Do DIA Da DATA Pedido");   
             document.getElementById('id_data_encerramento').value = "";
             window.setTimeout(function ()
             {

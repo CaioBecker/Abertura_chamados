@@ -64,30 +64,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       /////////////////////////
      /////DIFERENCA HORA//////
     /////////////////////////
-    $consulta_diferenca_hora="SELECT 
-    ROUND((minutos_totais / 60),0) AS HORAS,
-    ROUND((((minutos_totais / 60) - ROUND((minutos_totais / 60),0)) * 60),0) AS MINUTOS,
-    '00' AS SEGUNDOS
-    FROM (SELECT FNC_DIFERENCA_DATAS_COMPLETO(var_data_inicio => '" . $var_hr_inicial . "',
-                                              var_data_final  => '" . $var_hr_final . "') AS minutos_totais
-          FROM DUAL) intervalo
-    
-    
-    
-    ";
-    echo '</br> consulta horas: </br>'. $consulta_diferenca_hora;
-    $result_diferenca_hora = oci_parse($conn_ora, $consulta_diferenca_hora);
 
-    oci_execute($result_diferenca_hora);
+      include 'calculo_horas.php';
 
-    $row_diferenca_hora = oci_fetch_array($result_diferenca_hora);
+ 
+
     echo '</br>-----------------------------------------------------------------------';
-    echo '</br>TOTAL HORAS:'; echo $row_diferenca_hora['HORAS'];
-    echo '</br>TOTAL MINUTOS:'; echo $row_diferenca_hora['MINUTOS'];
-    echo '</br>'; echo $consulta_diferenca_hora;
+    $var_resultado_hora = $horasUteisEntreDuasDatas->format('%h');
+    echo '</br>TOTAL HORAS: ' . $var_resultado_hora;
+    $var_resultado_minutos = $horasUteisEntreDuasDatas->format('%i');
+    echo '</br>TOTAL MINUTOS: ' . $var_resultado_minutos;
     echo '</br>-----------------------------------------------------------------------';
-    $var_resultado_hora = $row_diferenca_hora['HORAS'];
-    $var_resultado_minutos = $row_diferenca_hora['MINUTOS'];    
+    //$var_resultado_hora = $row_diferenca_hora['HORAS'];
 
     ////////////////////
    ///CODIGO SERVICO///
@@ -284,12 +272,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             SELECT $var_nextval_serv AS CD_ITSOLICITACAO_OS,
                             TO_DATE('$var_hr_final', 'dd/mm/yy hh24:mi:ss') AS HR_FINAL,
                             TO_DATE('$var_hr_inicial', 'dd/mm/yy hh24:mi:ss') AS HR_INICIO,
-                            $var_resultado_hora AS VL_TEMPO_GASTO,
+                            '$var_resultado_hora' AS VL_TEMPO_GASTO,
                             $var_nextval AS CD_OS,
                             $var_cd_func AS CD_FUNC,
                             $cd_tp_servico AS CD_SERVICO,
-                            $var_resultado_minutos AS VL_TEMPO_GASTO_MIN,
                             NULL AS DS_SERVICO,
+                            '$var_resultado_minutos' AS VL_TEMPO_GASTO_MIN,
                             'S' AS SN_CHECK_LIST,
                             NULL AS VL_REAL,
                             NULL AS CD_BEM,
@@ -308,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             FROM DUAL
                             ";
                             
-      //echo "</br>".$consulta_tb_serv."</br>";
+      echo "</br>".$consulta_tb_serv."</br>";
       $teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
       $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
       //echo $teste;
@@ -328,21 +316,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$valida_chamado || !$valida_servico) {   
           $erro = oci_error($result_tb_os) . oci_error($result_tb_os) ;																							
           $_SESSION['msgerro'] = htmlentities($erro['message']);
-          //header('location: registro_chamado.php'); 
+          header('location: registro_chamado.php'); 
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          //header('location: home.php'); 
-          //return 0;
+          header('location: home.php'); 
+          return 0;
         }
     }else{
       $_SESSION['msgerro'] = 'Usuario do solicitante invalido';
-      //header('location: registro_chamado.php'); 
+      header('location: registro_chamado.php'); 
       return 0;
     }
   }else{
     $_SESSION['msgerro'] =  'Tipo de serviço invalido';
-    //header('location: registro_chamado.php'); 
+    header('location: registro_chamado.php'); 
     return 0;
   }
 }
