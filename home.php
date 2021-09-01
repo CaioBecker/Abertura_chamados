@@ -10,7 +10,7 @@
     include 'cabecalho.php';
 
     //ACESSO RESTRITO
-    include 'acesso_restrito.php';
+    //include 'acesso_restrito.php';
 
     //sql config padrao
     include 'config_padrao_usuario_sql.php';

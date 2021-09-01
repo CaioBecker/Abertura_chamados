@@ -16,19 +16,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
     $var_localidade = $_POST['frm_localidade'];
-    $var_motivo_os = $_POST['frm_motivo_os'];
-    $var_tipo_os = $_POST['frm_tipo_os'];
+    $var_motivo_os = $_POST['frm_mot_serv'];
+    $var_tipo_os = $_POST['frm_tip_os'];
     $var_email = $_POST['email'];
     $var_ramal = $_POST['ramal'];
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
-    //$var_codigo = $_POST['cd_os'];
+    $var_codigo = $_POST['frm_tip_serv'];
     $var_descricao = $_POST['ds_servico'];
     $var_data_pedido =  date('d/m/Y H:i:s', strtotime($_POST['dt_pedido']));
     $var_data_encerramento =  date('d/m/Y H:i:s', strtotime($_POST['dt_encerramento']));
     $var_usuario_responsavel = $_SESSION['usuarioLogin'];
     $var_solicitante = $_POST['input_valor'];
     $var_observacao = $_POST['ds_observacao'];
-    $var_cd_servico = $_POST['input_valor_servico'];
+    $var_cd_servico = $_POST['frm_tip_serv'];
     $var_hr_inicial =  date('d/m/Y H:i:s', strtotime($_POST['hr_inicial']));
     $var_hr_final =  date('d/m/Y H:i:s', strtotime($_POST['hr_final']));
     $var_ds_detalhada = $_POST['ds_detalhada'];
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>CD_ESPECIALIDADE: ' . $var_especialidade;
     echo '</br>CD_OFICINA: ' . $var_oficina;
     echo '</br>DS_LOCALIDADE:' . $var_localidade;
-    echo '</br>OFICINA:' . $var_motivo_os;
+    echo '</br>CD_MOTIVO_OS:' . $var_motivo_os;
     echo '</br>CD_TIPO_OS:' . $var_tipo_os;
     echo '</br>EMAIL:' . $var_email;
     echo '</br>RAMAL:' . $var_ramal;
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>USUARIO RESPONSAVEL:' . $var_usuario_responsavel;
     echo '</br>SOLICITANTE:' . $var_solicitante;
     echo '</br>OBSERVAÇÂO:' . $var_observacao;
-    echo '</br>TIPO DO SERVIÇO:' . $var_cd_servico;
+    //echo '</br>TIPO DO SERVIÇO:' . $var_cd_servico;
     echo '</br>HORA INICIAL:' . $var_hr_inicial;
     echo '</br>HORA FINAL:' . $var_hr_final;
     echo '</br>DESCRIÇÃO DETALHADA:' . $var_ds_detalhada;
@@ -87,10 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $consulta_cd_servico ="SELECT CD_SERVICO, NM_SERVICO
                         FROM dbamv.MANU_SERV ms
                         WHERE ms.CD_ITEM_RES = '186'
-                        AND ms.NM_SERVICO = '$var_cd_servico'";
+                        AND ms.CD_SERVICO = '$var_cd_servico'";
 
   $result_cd_servico = oci_parse($conn_ora, $consulta_cd_servico);							
-
+  echo '</br> consulta cd serviço: </br>' . $consulta_cd_servico;
   //EXECUTANDO A CONSULTA SQL (ORACLE)
   oci_execute($result_cd_servico);	
   $row_cd_servico = oci_fetch_array($result_cd_servico);
@@ -126,16 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /////////////////////////
        ///VALIDA TIPO SERVICO///
       /////////////////////////
-      $oracle_serv = "SELECT COUNT(*) AS QTD
-                        FROM dbamv.MANU_SERV serv
-                        WHERE serv.CD_SERVICO = $cd_tp_servico
-                        AND SERV.CD_ITEM_RES = 186";
-
-      $res_oracle_serv = oci_parse($conn_ora, $oracle_serv);	
-
-      oci_execute($res_oracle_serv);  
-
-      $row_qtd_serv = oci_fetch_array($res_oracle_serv);
 
 
 
@@ -179,11 +169,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $row_nextval_serv = oci_fetch_array($result_nextval_serv);
 
   $var_nextval_serv = $row_nextval_serv['CD_ITSOLICITACAO_OS'];
-  echo "</br>QUANTIDADE SERVICO:" .  $row_qtd_serv['QTD'];
+  //echo "</br>QUANTIDADE SERVICO:" .  $row_qtd_serv['QTD'];
   
   echo "</br>QUANTIDADE SOLICITANTE:" . $row_qtd['QTD'];
 //////////////////////////////////////////////////////////////////////////////////////////////////
-  if($row_qtd_serv['QTD'] > 0){
     if($row_qtd['QTD'] > 0){
         //////////////////
        ////////OS////////
@@ -200,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           '$var_setor' as CD_SETOR, 
                           1 as CD_MULTI_EMPRESA,
                           '$var_especialidade' as CD_ESPEC,
-                          29 as CD_TIPO_OS, 
+                          '$var_tipo_os' as CD_TIPO_OS, 
                           '$var_nome' as NM_USUARIO,
                           SYSDATE as DT_ULTIMA_ATUALIZACAO, 
                           '$var_localidade' as CD_LOCALIDADE, 
@@ -331,10 +320,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       header('location: registro_chamado.php'); 
       return 0;
     }
-  }else{
-    $_SESSION['msgerro'] =  'Tipo de serviço invalido';
-    header('location: registro_chamado.php'); 
-    return 0;
   }
-}
+
 ?>

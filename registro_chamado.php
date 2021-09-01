@@ -7,6 +7,7 @@
    //////////////////
     include 'config_padrao_sql.php';
     include 'config_padrao_usuario_sql.php';
+    include 'registro_chamado_sql.php';
 
 ?>
 
@@ -47,29 +48,26 @@
                 <input class="form-control" type="datetime-local" name="dt_encerramento" id="id_data_encerramento" onblur="valida_data_encerramento()"  required>
             </div>
             <!--------MOTIVO DO SERVICO-------->
-            <div class="form-group col-md-4">
-                Motivo da OS
-                <select name="frm_motivo_os" class="form-control">
-                <?php      
-                
-                    $var_real_cd_tipo_os = $row_tipo_os_usuario['CD_TIPO_OS'];
-                     
-                     $consulta_mot_serv_real = "SELECT MOS.CD_MOT_SERV, MOS.DS_MOT_SERV
-                                                FROM dbamv.MOT_SERV MOS
-                                                WHERE MOS.CD_TIPO_OS = $var_real_cd_tipo_os";
- 
-                     echo $consulta_mot_serv_real;
- 
-                     $result_mot_serv_real = oci_parse($conn_ora, $consulta_mot_serv_real);							
- 
-                     //EXECUTANDO A CONSULTA SQL (ORACLE)
-                     oci_execute($result_mot_serv_real);	
- 
-                    while($row_mot_serv_real = oci_fetch_array($result_mot_serv_real)){	
-                        echo  '<option value="'. $row_mot_serv_real['CD_MOT_SERV'] . '">' . $row_mot_serv_real['DS_MOT_SERV'] . '</option>';
-                    }
-                ?>
-                </select>
+            <div class="form-group col-md-5">
+            Tipo da OS:
+                    <select id="id_tip_os" name="frm_tip_os" class="form-control" required>
+
+                        <?php 
+                            if(isset($_POST['frm_tip_os'])){
+                                echo " <option value= '" . $row_tipo_os['CD_TIPO_OS'] . "'>".$row_tipo_os['DS_TIPO_OS']."</option>";
+                            }else{
+                            echo " <option value= ''>Tipo de Os</option>";
+                            }
+                        ?>
+
+                        <?php
+                            while($row_tipo_os = oci_fetch_array($result_tipo_os)){	
+
+                                echo "<option value='" . $row_tipo_os['CD_TIPO_OS'] . "'>" . $row_tipo_os['DS_TIPO_OS'] . "</option>";
+                            }
+                        ?>
+
+                    </select>
             </div>
 
         </div>
@@ -151,56 +149,65 @@
 
         <div class="form-row">
             <!--------TIPO DE SERVIÇO---------->
-            <div class="col-md-3">
-                Tipo do Serviço:
-                <!--auto complete serviço-->
-                <?php 
-                
-                        //CLASSE BOTAO
-                        //$classe_botao = 'fas fa-plus'; //ADICIONAR
-                        $classe_botao = 'fas fa-search'; //PESQUISAR
+            <div class="form-group col-md-3">
+            Tipo da Serviço:
+                    <select id="id_tip_serv" name="frm_tip_serv" class="form-control" required>
 
-                        //ACAO BOTAO
-                        $pagina_acao = 'permissoes.php';
-
-                        //PLACEHOLDER BOTAO
-                        if (!empty($filtro_filtro_cd_servico)){
-                            $placeholder_botao_servico = $filtro_cd_servico;
-                        }else{
-                            $placeholder_botao_servico= 'SERVIÇO';
-                        }
-
-                        //CONSULTA_LISTA
-                        $consulta_lista_servico = "SELECT *
-                                                FROM dbamv.MANU_SERV ms
-                                                WHERE ms.CD_ITEM_RES = 186";
-
-                        $result_lista_servico = oci_parse($conn_ora, $consulta_lista_servico);																									
-
-                        //EXECUTANDO A CONSULTA SQL (ORACLE)
-                        oci_execute($result_lista_servico);            
-
-                    ?>
-
-                    <script>
-
-                        //LISTA
-                        var countries_servico = [     
-                        <?php
-                            while($row_lista_servico = oci_fetch_array($result_lista_servico)){	
-                                echo '"'. $row_lista_servico['NM_SERVICO'] .'"'.',';                
+                        <?php 
+                            if(isset($_POST['frm_tip_serv'])){
+                                echo " <option value= '" . $row_tipo_serv['CD_SERVICO'] . "'>".$row_tipo_serv['NM_SERVICO']."</option>";
+                            }else{
+                            echo " <option value= ''>Tipo de Serviço</option>";
                             }
                         ?>
-                        ];
 
-                    </script>
+                        <?php
+                            while($row_tipo_serv = oci_fetch_array($result_tipo_serv)){	
 
-                    <?php
-                        //AUTOCOMPLETE
-                        include 'autocomplete_servico.php';
+                                echo "<option value='" . $row_tipo_serv['CD_SERVICO'] . "'>" . $row_tipo_serv['NM_SERVICO'] . "</option>";
+                            }
+                        ?>
 
+                    </select>
+            </div>
+            <div class="col-md-3">
+                Motivo do Serviço
+            <!--INDICADOR-->                
+                <select id="id_mot_serv" name="frm_mot_serv" class="form-control" required>
+                       <?php 
+                        if(isset($_POST['frm_mot_serv'])){
+
+                            echo " <option value= '" . $row_motivo_os['CD_MOTIV_SERV'] . "'>".$row_motivo_os['DS_MOTIV_SERV']."</option>";
+
+                            while($row_motivo_os = oci_fetch_array($result_motivo_os)){
+                                echo " <option value= '" . $row_motivo_os['CD_MOTIV_SERV'] . "'>".$row_motivo_os['DS_MOTIV_SERV']."</option>";
+                            }
+                        }else{
+                        echo " <option value= ''>Selecione um tipo de OS</option>";
+                        }
                     ?>
-                    <!--FIM CAIXA AUTOCOMPLETE-->  
+                </select>
+               
+                <script type="text/javascript">
+                    $(function(){
+                        $('#id_tip_os').change(function(){
+                            if( $(this).val() ) {
+                                
+                                $('#id_mot_serv').hide();
+                                $.getJSON('call_motivo.php?search=',{id_tip_os: $(this).val(), ajax: 'true'}, function(j){
+                                    var options = '<option value="">Motivo do servico</option>';
+                                    	
+                                    for (var i = 0; i < j.length; i++) {
+                                        options += '<option value="' + j[i].id_mot_serv + '">' + j[i].mot_serv + '</option>';
+                                    }	
+                                    $('#id_mot_serv').html(options).show();
+                                });
+                            } else {
+                                $('#id_mot_serv').html('<option value="">Selecione um Setor</option>');
+                            }
+                        });
+                    });
+                </script>
             </div>
             <!--------HORA INICIAL------------->
             <div class="col-md-3">

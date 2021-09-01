@@ -174,5 +174,20 @@
         }
     }
 
+    function motivo_servi(){
+        var ds_tipo_os = document.getElementById('input_valor_servico').value;
+        var ds_motivo_servi = document.gelElementById('frm_motivo_os').value;
+        alert(ds_tipo_os);
+        if(ds_tipo_os = ''){
+            
+            document.getElementById('input_valor_servico').focus();
+        }else{
+            alert(cd_tipo_os);
+        };
+       
+
+        $_SESSION['tipo_os'] = cd_tipo_os;
+        
+    }
      
 </script>
