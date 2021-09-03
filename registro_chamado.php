@@ -192,7 +192,7 @@
                     $(function(){
                         $('#id_tip_os').change(function(){
                             if( $(this).val() ) {
-                                alert($('#id_tip_os'))
+                               
                                 $('#id_mot_serv').hide();
                                 $.getJSON('call_motivo.php?search=',{id_tip_os: $(this).val(), ajax: 'true'}, function(j){
                                     var options = '<option value="">Motivo do servico</option>';

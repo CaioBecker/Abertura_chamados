@@ -310,16 +310,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$valida_chamado || !$valida_servico) {   
           $erro = oci_error($result_tb_os) . oci_error($result_tb_os) ;																							
           $_SESSION['msgerro'] = htmlentities($erro['message']);
-          //header('location: registro_chamado.php'); 
+          header('location: registro_chamado.php'); 
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          //header('location: home.php'); 
+          header('location: home.php'); 
           return 0;
         }
     }else{
       $_SESSION['msgerro'] = 'Usuario do solicitante invalido';
-      //header('location: registro_chamado.php'); 
+      header('location: registro_chamado.php'); 
       return 0;
     }
   }
