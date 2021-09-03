@@ -12,17 +12,17 @@
 		$usuario = strtoupper($_POST['login']);
 		$senha = $_POST['senha'];		
 		
-		$result_usuario = oci_parse($conn_ora, "SELECT dbamv.VALIDA_SENHA_FUNC_CHAMADOS(:usuario,:senha) AS RESP_LOGIN,
+		$result_usuario = oci_parse($conn_ora, "SELECT abchamados.VALIDA_SENHA_FUNC_CHAMADOS(:usuario,:senha) AS RESP_LOGIN,
 												INITCAP(usu.NM_USUARIO) AS USUARIO,                                                     
 												(SELECT CASE WHEN pu.CD_USUARIO IS NULL THEN 'N' ELSE 'S' END 
 												FROM dbasgu.PAPEL_USUARIOS pu
-												WHERE pu.CD_PAPEL = 339
+												WHERE pu.CD_PAPEL = 340
 												AND pu.CD_USUARIO = :usuario) AS USU_ADM
 												FROM dbasgu.USUARIOS usu
 												WHERE usu.CD_USUARIO = :usuario
 												AND ROWNUM = 1");
 												
-												
+		echo '</br>'. $result_usuario. '</br>';
 		//$stid = oci_parse($conn_ora, 'INSERT INTO MYTABLE (mid, myd) VALUES(:myid, :mydata)');
 		oci_bind_by_name($result_usuario, ':usuario', $usuario);
 		oci_bind_by_name($result_usuario, ':senha', $senha);
