@@ -177,10 +177,10 @@
                        <?php 
                         if(isset($_POST['frm_mot_serv'])){
 
-                            echo " <option value= '" . $row_motivo_os['CD_MOTIV_SERV'] . "'>".$row_motivo_os['DS_MOTIV_SERV']."</option>";
+                            echo " <option value= '" . $row_mot_os['CD_MOTIV_SERV'] . "'>".$row_mot_os['DS_MOTIV_SERV']."</option>";
 
-                            while($row_motivo_os = oci_fetch_array($result_motivo_os)){
-                                echo " <option value= '" . $row_motivo_os['CD_MOTIV_SERV'] . "'>".$row_motivo_os['DS_MOTIV_SERV']."</option>";
+                            while($row_mot_os = oci_fetch_array($result_mot_os)){
+                                echo " <option value= '" . $row_mot_os['CD_MOTIV_SERV'] . "'>".$row_mot_os['DS_MOTIV_SERV']."</option>";
                             }
                         }else{
                         echo " <option value= ''>Selecione um tipo de OS</option>";
@@ -192,7 +192,7 @@
                     $(function(){
                         $('#id_tip_os').change(function(){
                             if( $(this).val() ) {
-                                
+                                alert($('#id_tip_os'))
                                 $('#id_mot_serv').hide();
                                 $.getJSON('call_motivo.php?search=',{id_tip_os: $(this).val(), ajax: 'true'}, function(j){
                                     var options = '<option value="">Motivo do servico</option>';

@@ -16,12 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $var_especialidade = $_POST['frm_especialidade'];
     $var_oficina = $_POST['frm_oficina'];
     $var_localidade = $_POST['frm_localidade'];
-    $var_motivo_os = $_POST['frm_mot_serv'];
+    $var_motivo_serv = $_POST['frm_mot_serv'];
     $var_tipo_os = $_POST['frm_tip_os'];
     $var_email = $_POST['email'];
     $var_ramal = $_POST['ramal'];
     //RECEBENDO VARIAVEIS REGISTRO CHAMADO
-    $var_codigo = $_POST['frm_tip_serv'];
     $var_descricao = $_POST['ds_servico'];
     $var_data_pedido =  date('d/m/Y H:i:s', strtotime($_POST['dt_pedido']));
     $var_data_encerramento =  date('d/m/Y H:i:s', strtotime($_POST['dt_encerramento']));
@@ -43,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '</br>CD_ESPECIALIDADE: ' . $var_especialidade;
     echo '</br>CD_OFICINA: ' . $var_oficina;
     echo '</br>DS_LOCALIDADE:' . $var_localidade;
-    echo '</br>CD_MOTIVO_OS:' . $var_motivo_os;
+    echo '</br>CD_MOTIVO_SERV:' . $var_motivo_serv;
     echo '</br>CD_TIPO_OS:' . $var_tipo_os;
     echo '</br>EMAIL:' . $var_email;
     echo '</br>RAMAL:' . $var_ramal;
@@ -177,6 +176,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //////////////////
        ////////OS////////
       //////////////////
+      echo '</br> motivo serv: '. $var_motivo_serv;
+      echo '</br> tipo os: '.$var_tipo_os;
+      
       $consulta_tb_os = "INSERT INTO dbamv.SOLICITACAO_OS 
                           SELECT $var_nextval AS CD_OS,
                           TO_DATE('$var_data_pedido', 'dd/mm/yy hh24:mi:ss') AS DT_PEDIDO,
@@ -201,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           '$var_oficina' as CD_OFICINA,
                           'S' as SN_ORDEM_SERVICO_PRINCIPAL,
                           NULL as CD_ORDEM_SERVICO_PRINCIPAL,
-                          '$var_motivo_os' as CD_MOT_SERV,
+                          '$var_motivo_serv' as CD_MOT_SERV,
                           NULL as SN_OS_IMPRESSA,
                           NULL DT_HORA_IMPRESSAO,
                           NULL as CD_OS_INTEGRA,
@@ -246,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           FROM DUAL";
 
       $teste = '</br></br>' . $consulta_tb_os . '</br>';
-
+      //echo '</br>'. $consulta_tb_os. '</br>';
       $result_tb_os = oci_parse($conn_ora, $consulta_tb_os);							
 
       //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
@@ -288,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             FROM DUAL
                             ";
                             
-      echo "</br>".$consulta_tb_serv."</br>";
+      //echo "</br>".$consulta_tb_serv."</br>";
       $teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
       $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
       //echo $teste;
@@ -308,16 +310,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$valida_chamado || !$valida_servico) {   
           $erro = oci_error($result_tb_os) . oci_error($result_tb_os) ;																							
           $_SESSION['msgerro'] = htmlentities($erro['message']);
-          header('location: registro_chamado.php'); 
+          //header('location: registro_chamado.php'); 
           return 0;
         }else {
           $_SESSION['msg'] = 'Chamado ' . $var_nextval . ' registrado com sucesso com sucesso!';
-          header('location: home.php'); 
+          //header('location: home.php'); 
           return 0;
         }
     }else{
       $_SESSION['msgerro'] = 'Usuario do solicitante invalido';
-      header('location: registro_chamado.php'); 
+      //header('location: registro_chamado.php'); 
       return 0;
     }
   }
