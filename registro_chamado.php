@@ -305,13 +305,7 @@
                 </select>
             </div>
 
-            <!--TIPO DO SERVICO-->
-            <div class="form-group col-md-4">
-                <label>Tipo do Serviço </label>
-                <input type="text" name="frm_tipo_os_show" class="form-control" value="<?php echo $row_tipo_os_usuario['DS_TIPO_OS']; ?>" readonly>                        
-                <input type="hidden" name="frm_tipo_os" value="<?php echo $row_tipo_os_usuario['CD_TIPO_OS']; ?>">        
-            </div>
-
+        
            
 
             <!--EMAIL-->

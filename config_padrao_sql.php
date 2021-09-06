@@ -59,17 +59,7 @@ $result_localidade = oci_parse($conn_ora, $consulta_localidade);
 //EXECUTANDO A CONSULTA SQL (ORACLE)
 oci_execute($result_localidade);
 
-//TIPO DA OS
-$consulta_tipo_os =
-"SELECT TIO.CD_TIPO_OS, TIO.DS_TIPO_OS
-FROM DBAMV.TIPO_OS TIO
-WHERE TIO.DS_TIPO_OS NOT LIKE '%INATIVO%'
-ORDER BY TIO.DS_TIPO_OS ASC ";
 
-$result_tipo_os = oci_parse($conn_ora, $consulta_tipo_os);
-
-//EXECUTANDO A CONSULTA SQL (ORACLE)
-oci_execute($result_tipo_os);
 
 //MOTIVO DO SERVIÇO
 $consulta_mot_serv =

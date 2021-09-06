@@ -87,23 +87,6 @@ oci_execute($result_localidade_usuario);
 $row_localidade_usuario = oci_fetch_array($result_localidade_usuario);
 
 
-/////////////////////
-//TIPO OS USUARIO//
-/////////////////////
-$consulta_tipo_os_usuario =
-"SELECT tio.CD_TIPO_OS, tio.DS_TIPO_OS
-FROM ABCHAMADOS.PORTAL_CHAM_CONFIG_PADRAO cp
-INNER JOIN dbamv.TIPO_OS TIO
-  ON cp.CD_TIPO_OS = TIO.CD_TIPO_OS
-WHERE UPPER(cp.CD_USUARIO) = UPPER('$var_USUARIO')";
-
-$result_tipo_os_usuario = oci_parse($conn_ora, $consulta_tipo_os_usuario);
-
-//EXECUTANDO A CONSULTA SQL (ORACLE)
-oci_execute($result_tipo_os_usuario);	
-$row_tipo_os_usuario = oci_fetch_array($result_tipo_os_usuario);
-
-
 //////////////////////
 //MOTIVO OS USUARIO///
 //////////////////////
