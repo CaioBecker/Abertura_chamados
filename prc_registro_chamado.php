@@ -247,8 +247,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           NULL as TP_PRIORIDADE_MODIFIC_NO_RECEB
                           FROM DUAL";
 
-      $teste = '</br></br>' . $consulta_tb_os . '</br>';
-      //echo '</br>'. $consulta_tb_os. '</br>';
+      //$teste = '</br></br>' . $consulta_tb_os . '</br>';
+      //echo '</br>'. $teste . '</br>';
       $result_tb_os = oci_parse($conn_ora, $consulta_tb_os);							
 
       //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
@@ -291,7 +291,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ";
                             
       //echo "</br>".$consulta_tb_serv."</br>";
-      $teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
+      //$teste .= '</br></br>' . $consulta_tb_serv . '</br></br>';
       $result_tb_serv = oci_parse($conn_ora, $consulta_tb_serv);							
       //echo $teste;
       //EXECUTANDO A CONSULTA SQL (ORACLE) [VALIDANDO AO MESMO TEMPO]
